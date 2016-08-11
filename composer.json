@@ -1,0 +1,50 @@
+{
+  "name": "felixarntz/screen-reader-check",
+  "description": "A tool to help developers to make their HTML code accessible for screen reader users.",
+  "version": "1.0.0",
+  "license": "GPL-3.0",
+  "type": "wordpress-plugin",
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "screen reader",
+    "accessibility",
+    "a11n",
+    "tool"
+  ],
+  "homepage": "https://screen-reader-check.felix-arntz.me",
+  "authors": [
+    {
+      "name": "Felix Arntz",
+      "email": "felix-arntz@leaves-and-love.net",
+      "homepage": "https://leaves-and-love.net",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "felix-arntz@leaves-and-love.net",
+    "issues": "https://github.com/felixarntz/screen-reader-check/issues"
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "autoload": {
+    "psr-4": {
+      "ScreenReaderCheck\\": "includes/ScreenReaderCheck/"
+    }
+  },
+  "require": {
+    "composer/installers": "~1.0",
+    "paquettg/php-html-parser": "~1.7"
+  },
+  "require-dev": {
+    "codeclimate/php-test-reporter": "dev-master",
+    "phpmd/phpmd": "*",
+    "wp-coding-standards/wpcs": "*",
+    "sebastian/phpcpd": "*"
+  },
+  "scripts":     {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "post-update-cmd":  "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+  }
+}

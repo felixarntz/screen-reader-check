@@ -29,9 +29,12 @@ class Util {
 	 * @return string The HTML code on success, an empty string on failure.
 	 */
 	public static function fetch_html_from_url( $url ) {
-		//TODO
+		$response = wp_remote_get( $url, array() );
+		if ( is_wp_error( $response ) ) {
+			return '';
+		}
 
-		return '';
+		return wp_remote_retrieve_body( $response );
 	}
 
 	/**
@@ -49,9 +52,13 @@ class Util {
 	public static function get_html_title( $html ) {
 		$dom = new Dom();
 		$dom->loadStr( $html, array() );
-		//TODO
 
-		return '';
+		$title_tag = $dom->find( 'title', 0 );
+		if ( ! $title_tag ) {
+			return '';
+		}
+
+		return $title_tag->text();
 	}
 
 	/**

@@ -113,6 +113,15 @@ class App {
 
 		$checks = new Checks();
 		add_action( 'init', array( $checks, 'register_post_type' ) );
+
+		$tests = new Tests( $checks );
+
+		$ajax = new AjaxHandler();
+		add_action( 'admin_init', array( $ajax, 'init' ) );
+		add_action( 'wp_enqueue_scripts', array( $ajax, 'register_script' ), 1 );
+
+		$ajax->register_action( 'create_check', array( $checks, 'ajax_create' ) );
+		$ajax->register_action( 'run_next_test', array( $tests, 'ajax_run_next_test' ) );
 	}
 
 	/**

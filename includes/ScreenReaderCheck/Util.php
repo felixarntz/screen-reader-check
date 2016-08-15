@@ -38,6 +38,23 @@ class Util {
 	}
 
 	/**
+	 * Parses a HTML string into a DOM object.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @static
+	 *
+	 * @param string $html The HTML code to parse.
+	 * @return PHPHtmlParser\Dom The DOM object.
+	 */
+	public static function parse_html( $html ) {
+		$dom = new Dom();
+		$dom->loadStr( $html, array() );
+
+		return $dom;
+	}
+
+	/**
 	 * Returns the content of the title tag in a given HTML code.
 	 *
 	 * If this method fails, it can be assumed that the HTML code cannot be parsed.
@@ -46,12 +63,11 @@ class Util {
 	 * @access public
 	 * @static
 	 *
-	 * @param string $html The HTML code to extra the title from.
+	 * @param string $html The HTML code to extract the title from.
 	 * @return string The title on success, an empty string on failure.
 	 */
 	public static function get_html_title( $html ) {
-		$dom = new Dom();
-		$dom->loadStr( $html, array() );
+		$dom = self::parse_html( $html );
 
 		$title_tag = $dom->find( 'title', 0 );
 		if ( ! $title_tag ) {

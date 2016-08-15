@@ -38,6 +38,18 @@ class Check {
 	}
 
 	/**
+	 * Returns the ID of this check.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return int The check ID.
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
 	 * Returns the URL of the web page checked.
 	 *
 	 * @since 1.0.0
@@ -92,18 +104,27 @@ class Check {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param ScreenReaderCheck\TestResult $result The test result to update.
+	 * @param ScreenReaderCheck\TestResult      $result            The test result to update.
+	 * @param ScreenReaderCheck\TestResult|null $result_to_replace Optional. The test result to replace.
+	 *                                                             If omitted, it is detected automatically.
 	 * @return bool True on success, false on failure.
 	 */
-	public function update_test_result( $result ) {
-		$old_results = $this->get_test_results();
+	public function update_test_result( $result, $result_to_replace = null ) {
+		if ( ! $result_to_replace ) {
+			$old_results = $this->get_test_results();
 
-		foreach ( $old_results as $old_result ) {
-			if ( $result->get_test_slug() === $old_result->get_test_slug() ) {
-				return (bool) update_post_meta( $this->id, 'src_test_results', $result->to_array(), $old_result->to_array() );
+			foreach ( $old_results as $old_result ) {
+				if ( $result->get_test_slug() === $old_result->get_test_slug() ) {
+					$result_to_replace = $old_result;
+					break;
+				}
+			}
+
+			if ( ! $result_to_replace ) {
+				return false;
 			}
 		}
 
-		return false;
+		return (bool) update_post_meta( $this->id, 'src_test_results', $result->to_array(), $result_to_replace->to_array() );
 	}
 }

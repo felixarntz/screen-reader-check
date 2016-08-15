@@ -122,6 +122,7 @@ class Checks {
 			case 'register_post_type_meta_boxes':
 			case 'render_post_type_data_meta_box':
 			case 'render_post_type_tests_meta_box':
+			case 'ajax_create':
 				call_user_func_array( array( $this, $method ), $args );
 				break;
 		}
@@ -249,5 +250,23 @@ class Checks {
 			'items_list_navigation' => __( 'Checks list navigation', 'screen-reader-check' ),
 			'items_list'            => __( 'Checks list', 'screen-reader-check' ),
 		);
+	}
+
+	/**
+	 * AJAX callback to create a new check.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param array $data Arguments passed through AJAX.
+	 * @return array|WP_Error Response array on success, or error object on failure.
+	 */
+	private function ajax_create( $data ) {
+		$check = $this->create( $data );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
+		return array( 'id' => $check->get_id() );
 	}
 }

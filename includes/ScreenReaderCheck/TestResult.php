@@ -35,6 +35,15 @@ class TestResult {
 	private $check_id = 0;
 
 	/**
+	 * The result type. Either 'success', 'info', 'warning' or 'error'.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var string
+	 */
+	private $type = 'error';
+
+	/**
 	 * Array of messages for this result.
 	 *
 	 * @since 1.0.0
@@ -91,6 +100,18 @@ class TestResult {
 	 */
 	public function get_check_id() {
 		return $this->check_id;
+	}
+
+	/**
+	 * Returns the result type.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The result type.
+	 */
+	public function get_type() {
+		return $this->type;
 	}
 
 	/**

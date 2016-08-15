@@ -245,6 +245,7 @@ class Tests {
 			if ( 'check_completed' === $result->get_error_code() ) {
 				return array(
 					'test_slug'      => '',
+					'test_title'     => '',
 					'check_id'       => $check_id,
 					'type'           => 'success',
 					'messages'       => array( __( 'All tests completed.', 'screen-reader-check' ) ),

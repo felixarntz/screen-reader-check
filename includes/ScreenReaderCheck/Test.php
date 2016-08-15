@@ -26,6 +26,15 @@ abstract class Test {
 	protected $slug = '';
 
 	/**
+	 * The title of the test.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $title = '';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
@@ -53,7 +62,8 @@ abstract class Test {
 			'request_data' => array(),
 		), $dom, $args );
 
-		$result['test_slug'] = $this->get_slug();
+		$result['test_slug'] = $this->slug;
+		$result['test_title'] = $this->title;
 		$result['check_id'] = $check_id;
 
 		return new TestResult( $result );
@@ -69,6 +79,18 @@ abstract class Test {
 	 */
 	public function get_slug() {
 		return $this->slug;
+	}
+
+	/**
+	 * Returns the title of this test.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The test title.
+	 */
+	public function get_title() {
+		return $this->title;
 	}
 
 	/**

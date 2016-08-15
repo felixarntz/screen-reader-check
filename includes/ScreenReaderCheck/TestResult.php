@@ -26,6 +26,15 @@ class TestResult {
 	private $test_slug = '';
 
 	/**
+	 * The title of the test performed.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var string
+	 */
+	private $test_title = '';
+
+	/**
 	 * The check ID this result belongs to.
 	 *
 	 * @since 1.0.0
@@ -88,6 +97,18 @@ class TestResult {
 	 */
 	public function get_test_slug() {
 		return $this->test_slug;
+	}
+
+	/**
+	 * Returns the title of the test performed.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The test title.
+	 */
+	public function get_test_title() {
+		return $this->test_title;
 	}
 
 	/**

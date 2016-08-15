@@ -28,6 +28,7 @@ class ImgAltText extends Test {
 		parent::__construct();
 
 		$this->slug = 'img_alt_text';
+		$this->title = __( 'Image Alternative Texts', 'screen-reader-check' );
 	}
 
 	/**

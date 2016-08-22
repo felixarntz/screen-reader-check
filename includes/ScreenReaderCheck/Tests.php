@@ -72,6 +72,8 @@ class Tests {
 		}
 
 		$this->checks = $checks;
+
+		$this->checks->set_global_options( $this->get_global_options() );
 	}
 
 	/**
@@ -138,6 +140,27 @@ class Tests {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Returns an array of global options that can optionally be entered on form submission.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return array Array of global options.
+	 */
+	public function get_global_options() {
+		return array(
+			array(
+				'slug'              => 'iconfont',
+				'type'              => 'text',
+				'label'             => __( 'Icon Font Class', 'screen-reader-check' ),
+				'description'       => __( 'If you are using icon fonts on your site, please specify a list of CSS class prefixes denoting them, separated by space.', 'screen-reader-check' ),
+				'admin_description' => __( 'This is a list of CSS class prefixes for any icon fonts used in the HTML code.', 'screen-reader-check' ),
+				'default'           => '',
+			),
+		);
 	}
 
 	/**

@@ -19,6 +19,29 @@ defined( 'ABSPATH' ) || exit;
  */
 class Checks {
 	/**
+	 * Global options.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $global_options = array();
+
+	/**
+	 * Sets the global options.
+	 *
+	 * These come from the tests class.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param array $options Array of global options.
+	 */
+	public function set_global_options( $options ) {
+		$this->global_options = $options;
+	}
+
+	/**
 	 * Creates a new check.
 	 *
 	 * @since 1.0.0
@@ -29,8 +52,9 @@ class Checks {
 	 */
 	public function create( $args = array() ) {
 		$args = wp_parse_args( $args, array(
-			'html' => '',
-			'url'  => '',
+			'html'    => '',
+			'url'     => '',
+			'options' => array(),
 		) );
 
 		if ( empty( $args['url'] ) && empty( $args['html'] ) ) {
@@ -64,6 +88,7 @@ class Checks {
 
 		update_post_meta( $id, 'src_url', $args['url'] );
 		update_post_meta( $id, 'src_html', $args['html'] );
+		update_post_meta( $id, 'src_options', $args['options'] );
 
 		return new Check( $id );
 	}
@@ -177,6 +202,8 @@ class Checks {
 		$url = $check->get_url();
 		$html = $check->get_html();
 
+		$options = $check->get_options();
+
 		?>
 		<table class="form-table">
 			<?php if ( ! empty( $url ) ) : ?>
@@ -201,6 +228,22 @@ class Checks {
 					</div>
 				</td>
 			</tr>
+		</table>
+
+		<h3><?php _e( 'Advanced Options', 'screen-reader-check' ); ?></h3>
+
+		<table class="form-table">
+			<?php foreach ( $this->global_options as $option ) : ?>
+				<tr>
+					<th scope="row">
+						<label for="src_options_<?php echo $option['slug']; ?>"><?php echo $option['label']; ?></label>
+					</th>
+					<td>
+						<input type="<?php echo $option['type']; ?>" id="src_options_<?php echo $option['slug']; ?>" value="<?php echo isset( $options[ $option['slug'] ] ) ? $options[ $option['slug'] ] : $option['default']; ?>" class="regular-text" readonly="readonly" aria-describedby="src_options_<?php echo $option['slug']; ?>_description" />
+						<p id="src_options_<?php echo $option['slug']; ?>_description" class="description"><?php echo $option['admin_description']; ?></p>
+					</td>
+				</tr>
+			<?php endforeach; ?>
 		</table>
 		<?php
 	}

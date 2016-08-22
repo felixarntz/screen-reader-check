@@ -125,7 +125,7 @@ class AjaxHandler {
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_script( 'screen-reader-check', App::instance()->url( 'assets/dist/js/screen-reader-check' . $min . 'js' ), array( 'jquery', 'wp-util' ), '1.0.0', true );
+		wp_register_script( 'screen-reader-check', App::instance()->url( 'assets/dist/js/screen-reader-check' . $min . '.js' ), array( 'jquery', 'wp-util' ), '1.0.0', true );
 		wp_localize_script( 'screen-reader-check', 'screenReaderCheck', $args );
 	}
 }

@@ -74,6 +74,36 @@ class Check {
 	}
 
 	/**
+	 * Returns all global options submitted for the check.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return array Check options.
+	 */
+	public function get_options() {
+		return get_post_meta( $this->id, 'src_options', true );
+	}
+
+	/**
+	 * Returns the value for a specific option.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param string $option Name of the option to get.
+	 * @return mixed The value of the option, or null if not specified.
+	 */
+	public function get_option( $option ) {
+		$options = $this->get_options();
+		if ( ! isset( $options[ $option ] ) ) {
+			return null;
+		}
+
+		return $options[ $option ];
+	}
+
+	/**
 	 * Returns all test results for this check.
 	 *
 	 * @since 1.0.0

@@ -43,3 +43,7 @@ function src_load() {
 	$screen_reader_check->initialize( __FILE__ );
 }
 add_action( 'plugins_loaded', 'src_load' );
+
+function src_get() {
+	return call_user_func( array( 'ScreenReaderCheck\App', 'instance' ) );
+}

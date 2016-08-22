@@ -56,6 +56,33 @@ class App {
 	private $initialized = false;
 
 	/**
+	 * The checks class instance.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var ScreenReaderCheck\Checks
+	 */
+	public $checks;
+
+	/**
+	 * The tests class instance.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var ScreenReaderCheck\Tests
+	 */
+	public $tests;
+
+	/**
+	 * The AJAX handler class instance.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var ScreenReaderCheck\AjaxHandler
+	 */
+	public $ajax;
+
+	/**
 	 * Constructor.
 	 *
 	 * It is private to prevent duplicate instantiation.
@@ -111,17 +138,17 @@ class App {
 		$this->initialized = true;
 		$this->main_file = $main_file;
 
-		$checks = new Checks();
-		add_action( 'init', array( $checks, 'register_post_type' ) );
+		$this->checks = new Checks();
+		add_action( 'init', array( $this->checks, 'register_post_type' ) );
 
-		$tests = new Tests( $checks );
+		$this->tests = new Tests( $this->checks );
 
 		$ajax = new AjaxHandler();
 		add_action( 'admin_init', array( $ajax, 'init' ) );
 		add_action( 'wp_enqueue_scripts', array( $ajax, 'register_script' ), 1 );
 
-		$ajax->register_action( 'create_check', array( $checks, 'ajax_create' ) );
-		$ajax->register_action( 'run_next_test', array( $tests, 'ajax_run_next_test' ) );
+		$ajax->register_action( 'create_check', array( $this->checks, 'ajax_create' ) );
+		$ajax->register_action( 'run_next_test', array( $this->tests, 'ajax_run_next_test' ) );
 	}
 
 	/**

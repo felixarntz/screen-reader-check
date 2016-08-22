@@ -175,8 +175,7 @@ class Tests {
 	public function __call( $method, $args ) {
 		switch ( $method ) {
 			case 'ajax_run_next_test':
-				call_user_func_array( array( $this, $method ), $args );
-				break;
+				return call_user_func_array( array( $this, $method ), $args );
 		}
 	}
 

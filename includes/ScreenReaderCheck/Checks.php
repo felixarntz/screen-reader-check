@@ -148,8 +148,7 @@ class Checks {
 			case 'render_post_type_data_meta_box':
 			case 'render_post_type_tests_meta_box':
 			case 'ajax_create':
-				call_user_func_array( array( $this, $method ), $args );
-				break;
+				return call_user_func_array( array( $this, $method ), $args );
 		}
 	}
 

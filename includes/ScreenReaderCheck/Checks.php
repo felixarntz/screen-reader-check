@@ -261,6 +261,28 @@ class Checks {
 		$results = $check->get_test_results();
 		?>
 
+		<?php if ( empty( $results ) ) : ?>
+			<p><?php _e( 'No tests have been executed yet for this check.', 'screen-reader-check' ); ?></p>
+		<?php else : ?>
+			<style type="text/css">
+				.code-snippet {
+					width: 100%;
+					padding: 5px 10px;
+					font-family: monospace;
+					color: #aa0000;
+					background-color: #eeeeee;
+				}
+			</style>
+			<ul>
+				<?php foreach ( $results as $result ) : ?>
+					<li id="src-result-<?php echo $result->get_test_slug(); ?>" class="src-result src-result-<?php echo $result->get_type() ?>">
+						<h3><?php echo $result->get_test_title(); ?></h3>
+						<?php echo '<p>' . implode( '</p><p>', $result->get_messages() ) . '</p>'; ?>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		<?php endif; ?>
+
 		<?php
 	}
 

@@ -266,8 +266,8 @@ class Tests {
 		if ( is_wp_error( $result ) ) {
 			if ( 'check_completed' === $result->get_error_code() ) {
 				return array(
-					'test_slug'      => '',
-					'test_title'     => '',
+					'test_slug'      => 'all_completed',
+					'test_title'     => __( 'Success', 'screen-reader-check' ),
 					'check_id'       => $check_id,
 					'type'           => 'success',
 					'messages'       => array( __( 'All tests completed.', 'screen-reader-check' ) ),

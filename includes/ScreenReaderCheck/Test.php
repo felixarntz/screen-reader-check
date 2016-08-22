@@ -117,7 +117,7 @@ abstract class Test {
 	 * @return string The textarea containing the code snippet.
 	 */
 	protected function wrap_code( $code ) {
-		$rows = substr_count( $code, "\n" ) + 1;
+		$rows = substr_count( $code, "\n" ) + 2;
 
 		return '<textarea rows="' . $rows . '" class="code-snippet" readonly="readonly">' . esc_textarea( $code ) . '</textarea>';
 	}

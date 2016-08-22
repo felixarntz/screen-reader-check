@@ -74,7 +74,7 @@ class Util {
 			return '';
 		}
 
-		return $title_tag->text();
+		return trim( $title_tag->text() );
 	}
 
 	/**

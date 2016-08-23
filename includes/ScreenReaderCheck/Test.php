@@ -35,6 +35,15 @@ abstract class Test {
 	protected $title = '';
 
 	/**
+	 * The description of the test.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $description = '';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
@@ -64,6 +73,7 @@ abstract class Test {
 
 		$result['test_slug'] = $this->slug;
 		$result['test_title'] = $this->title;
+		$result['test_description'] = $this->description;
 		$result['check_id'] = $check_id;
 
 		return new TestResult( $result );

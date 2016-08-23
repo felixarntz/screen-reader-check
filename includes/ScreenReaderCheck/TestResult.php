@@ -35,6 +35,15 @@ class TestResult {
 	private $test_title = '';
 
 	/**
+	 * The description of the test performed.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var string
+	 */
+	private $test_description = '';
+
+	/**
 	 * The check ID this result belongs to.
 	 *
 	 * @since 1.0.0
@@ -109,6 +118,18 @@ class TestResult {
 	 */
 	public function get_test_title() {
 		return $this->test_title;
+	}
+
+	/**
+	 * Returns the description of the test performed.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The test description.
+	 */
+	public function get_test_description() {
+		return $this->test_description;
 	}
 
 	/**

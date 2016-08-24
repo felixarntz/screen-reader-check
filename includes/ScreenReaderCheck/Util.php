@@ -8,7 +8,7 @@
 
 namespace ScreenReaderCheck;
 
-use PHPHtmlParser\Dom;
+use ScreenReaderCheck\Parser\Dom;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -48,10 +48,7 @@ class Util {
 	 * @return PHPHtmlParser\Dom The DOM object.
 	 */
 	public static function parse_html( $html ) {
-		$dom = new Dom();
-		$dom->loadStr( $html, array() );
-
-		return $dom;
+		return Dom::parse( $html );
 	}
 
 	/**
@@ -69,7 +66,7 @@ class Util {
 	public static function get_html_title( $html ) {
 		$dom = self::parse_html( $html );
 
-		$title_tag = $dom->find( 'title', 0 );
+		$title_tag = $dom->find( 'title', true );
 		if ( ! $title_tag ) {
 			return '';
 		}

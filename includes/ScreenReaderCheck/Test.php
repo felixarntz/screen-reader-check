@@ -59,9 +59,9 @@ abstract class Test {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param PHPHtmlParser\Dom $dom      The DOM object to check.
-	 * @param int               $check_id The check ID.
-	 * @param array             $args     Additional arguments.
+	 * @param ScreenReaderCheck\Parser\Dom $dom      The DOM object to check.
+	 * @param int                          $check_id The check ID.
+	 * @param array                        $args     Additional arguments.
 	 * @return ScreenReaderCheck\TestResult The result for the test.
 	 */
 	public function get_result( $dom, $check_id, $args = array() ) {
@@ -109,10 +109,10 @@ abstract class Test {
 	 * @since 1.0.0
 	 * @access protected
 	 *
-	 * @param array             $result The default result array with keys
-	 *                                  `type`, `messages` and `request_data`.
-	 * @param PHPHtmlParser\Dom $dom    The DOM object to check.
-	 * @param array             $args   Additional arguments.
+	 * @param array                        $result The default result array with keys
+	 *                                             `type`, `messages` and `request_data`.
+	 * @param ScreenReaderCheck\Parser\Dom $dom    The DOM object to check.
+	 * @param array                        $args   Additional arguments.
 	 * @return array The modified result array.
 	 */
 	protected abstract function run( $result, $dom, $args = array() );

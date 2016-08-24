@@ -38,10 +38,10 @@ class ImgAltText extends Test {
 	 * @since 1.0.0
 	 * @access protected
 	 *
-	 * @param array             $result The default result array with keys
-	 *                                  `type`, `messages` and `request_data`.
-	 * @param PHPHtmlParser\Dom $dom    The DOM object to check.
-	 * @param array             $args   Additional arguments.
+	 * @param array                        $result The default result array with keys
+	 *                                             `type`, `messages` and `request_data`.
+	 * @param ScreenReaderCheck\Parser\Dom $dom    The DOM object to check.
+	 * @param array                        $args   Additional arguments.
 	 * @return array The modified result array.
 	 */
 	protected function run( $result, $dom, $args = array() ) {

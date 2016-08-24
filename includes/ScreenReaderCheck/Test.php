@@ -77,6 +77,14 @@ abstract class Test {
 		if ( ! empty( $args ) ) {
 			$prefixed_args = array();
 			foreach ( $args as $option => $value ) {
+				// Array values will be merged, not replaced.
+				if ( is_array( $value ) ) {
+					$old_option = $check->get_option( $this->slug . '_' . $option );
+					if ( $old_option ) {
+						$value = array_merge( $old_option, $value );
+					}
+				}
+
 				$prefixed_args[ $this->slug . '_' . $option ] = $value;
 			}
 

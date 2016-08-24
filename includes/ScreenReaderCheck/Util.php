@@ -45,7 +45,7 @@ class Util {
 	 * @static
 	 *
 	 * @param string $html The HTML code to parse.
-	 * @return PHPHtmlParser\Dom The DOM object.
+	 * @return ScreenReaderCheck\Parser\Dom|null The DOM object, or null on parse error.
 	 */
 	public static function parse_html( $html ) {
 		return Dom::parse( $html );
@@ -65,6 +65,9 @@ class Util {
 	 */
 	public static function get_html_title( $html ) {
 		$dom = self::parse_html( $html );
+		if ( ! $dom ) {
+			return '';
+		}
 
 		$title_tag = $dom->find( 'title', true );
 		if ( ! $title_tag ) {

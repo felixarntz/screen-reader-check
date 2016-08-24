@@ -123,6 +123,9 @@ class Tests {
 		}
 
 		$dom = Util::parse_html( $check->get_html() );
+		if ( ! $dom ) {
+			return new WP_Error( 'could_not_parse_html', __( 'The HTML code could not be parsed.', 'screen-reader-check' ) );
+		}
 
 		$result = $test->get_result( $dom, $check_id, $args );
 		if ( is_wp_error( $result ) ) {

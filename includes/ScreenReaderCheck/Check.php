@@ -81,7 +81,19 @@ class Check {
 	 * @return string The HTML code checked.
 	 */
 	public function get_html() {
-		return get_post_meta( $this->id, 'src_html', true );
+		$html = get_post_meta( $this->id, 'src_html', true );
+		if ( is_array( $html ) ) {
+			// HTML is stored in chunks.
+			$output = '';
+
+			foreach ( $html as $chunk_name ) {
+				$output .= get_post_meta( $this->id, $chunk_name, true );
+			}
+
+			return $output;
+		}
+
+		return $html;
 	}
 
 	/**

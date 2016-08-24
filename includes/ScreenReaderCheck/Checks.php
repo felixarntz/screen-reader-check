@@ -115,8 +115,24 @@ class Checks {
 
 		$status = update_post_meta( $id, 'src_html', $args['html'] );
 		if ( ! $status ) {
-			$this->delete( $id );
-			return new WP_Error( 'could_not_store_check_html', __( 'An internal error occurred while trying to store the check HTML.', 'screen-reader-check' ) );
+			// If this failed, the HTML is string is very long and needs to be split into chunks.
+			/*$status = true;
+			$chunk_names = array();
+			for ( $i = 0; $i < strlen( $args['html'] ); $i += 30000 ) {
+				$count = ( $i / 30000 ) + 1;
+				$chunk = substr( $args['html'], $i, 30000 );
+				$chunk_name = 'src_html_chunk' . $count;
+				$chunk_names[] = $chunk_name;
+
+				$status = $status && update_post_meta( $id, $chunk_name, $chunk );
+			}
+
+			$status = $status && update_post_meta( $id, 'src_html', $chunk_names );
+
+			if ( ! $status ) {*/
+				$this->delete( $id );
+				return new WP_Error( 'could_not_store_check_html', __( 'An internal error occurred while trying to store the check HTML.', 'screen-reader-check' ) );
+			//}
 		}
 
 		//$this->delete( $id );

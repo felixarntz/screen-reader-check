@@ -107,8 +107,15 @@ class Checks {
 			return new WP_Error( 'could_not_store_check', __( 'An internal error occurred while trying to store the check.', 'screen-reader-check' ) );
 		}
 
-		update_post_meta( $id, 'src_url', $args['url'] );
-		update_post_meta( $id, 'src_html', $args['html'] );
+		$status = update_post_meta( $id, 'src_url', $args['url'] );
+		if ( ! $status && ! empty( $args['url'] ) ) {
+			return new WP_Error( 'could_not_store_check_url', __( 'An internal error occurred while trying to store the check URL.', 'screen-reader-check' ) );
+		}
+
+		$status = update_post_meta( $id, 'src_html', $args['html'] );
+		if ( ! $status ) {
+			return new WP_Error( 'could_not_store_check_html', __( 'An internal error occurred while trying to store the check HTML.', 'screen-reader-check' ) );
+		}
 
 		if ( ! empty( $args['url'] ) ) {
 			$domain = $this->domains->get_by_url( $args['url'] );

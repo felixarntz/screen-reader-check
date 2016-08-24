@@ -19,6 +19,15 @@ defined( 'ABSPATH' ) || exit;
  */
 class Checks {
 	/**
+	 * The domains class instance.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var ScreenReaderCheck\Domains
+	 */
+	private $domains;
+
+	/**
 	 * Global options.
 	 *
 	 * @since 1.0.0
@@ -26,6 +35,18 @@ class Checks {
 	 * @var array
 	 */
 	private $global_options = array();
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param ScreenReaderCheck\Domains $domains The domains class instance.
+	 */
+	public function __construct( $domains ) {
+		$this->domains = $domains;
+	}
 
 	/**
 	 * Sets the global options.
@@ -88,9 +109,19 @@ class Checks {
 
 		update_post_meta( $id, 'src_url', $args['url'] );
 		update_post_meta( $id, 'src_html', $args['html'] );
-		update_post_meta( $id, 'src_options', $args['options'] );
 
-		return new Check( $id );
+		if ( ! empty( $args['url'] ) ) {
+			$domain = $this->domains->get_by_url( $args['url'] );
+			if ( is_wp_error( $domain ) ) {
+				return $domain;
+			}
+
+			$domain->update_options( $args['options'] );
+		} else {
+			update_post_meta( $id, 'src_options', $args['options'] );
+		}
+
+		return $this->get( $id );
 	}
 
 	/**
@@ -107,7 +138,14 @@ class Checks {
 			return new WP_Error( 'invalid_id', __( 'Invalid check ID.', 'screen-reader-check' ) );
 		}
 
-		return new Check( $id );
+		$url = get_post_meta( $id, 'src_url', true );
+		if ( $url ) {
+			$domain = $this->domains->get_by_url( $url );
+		} else {
+			$domain = null;
+		}
+
+		return new Check( $id, $domain );
 	}
 
 	/**
@@ -126,7 +164,7 @@ class Checks {
 
 		$post = wp_delete_post( $id, true );
 		if ( ! $post ) {
-			return new WP_Error( 'could_not_delete_check', __( 'An internal error occurred while trying to delete the post.', 'screen-reader-check' ) );
+			return new WP_Error( 'could_not_delete_check', __( 'An internal error occurred while trying to delete the check.', 'screen-reader-check' ) );
 		}
 
 		return true;

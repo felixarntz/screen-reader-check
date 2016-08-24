@@ -65,6 +65,15 @@ class App {
 	public $checks;
 
 	/**
+	 * The domains class instance.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var ScreenReaderCheck\Domains
+	 */
+	public $domains;
+
+	/**
 	 * The tests class instance.
 	 *
 	 * @since 1.0.0
@@ -138,7 +147,10 @@ class App {
 		$this->initialized = true;
 		$this->main_file = $main_file;
 
-		$this->checks = new Checks();
+		$this->domains = new Domains();
+		add_action( 'init', array( $this->domains, 'register_post_type' ) );
+
+		$this->checks = new Checks( $this->domains );
 		add_action( 'init', array( $this->checks, 'register_post_type' ) );
 
 		$this->tests = new Tests( $this->checks );

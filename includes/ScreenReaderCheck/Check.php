@@ -26,15 +26,26 @@ class Check {
 	private $id = 0;
 
 	/**
+	 * The domain object for this check.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var ScreenReaderCheck\Domain
+	 */
+	private $domain;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 *
 	 * @param int $id The check ID.
+	 * @param ScreenReaderCheck\Domain|null The domain object for this check, or null.
 	 */
-	public function __construct( $id ) {
+	public function __construct( $id, $domain ) {
 		$this->id = $id;
+		$this->domain = $domain;
 	}
 
 	/**
@@ -74,15 +85,24 @@ class Check {
 	}
 
 	/**
-	 * Returns all global options submitted for the check.
+	 * Returns all options for the check.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @return array Check options.
+	 * @return array Check options as $option => $value pairs.
 	 */
 	public function get_options() {
-		return get_post_meta( $this->id, 'src_options', true );
+		if ( $this->domain ) {
+			return $this->domain->get_options();
+		}
+
+		$options = get_post_meta( $this->id, 'src_options', true );
+		if ( ! $options ) {
+			return array();
+		}
+
+		return $options;
 	}
 
 	/**
@@ -95,12 +115,59 @@ class Check {
 	 * @return mixed The value of the option, or null if not specified.
 	 */
 	public function get_option( $option ) {
+		if ( $this->domain ) {
+			return $this->domain->get_option( $option );
+		}
+
 		$options = $this->get_options();
 		if ( ! isset( $options[ $option ] ) ) {
 			return null;
 		}
 
 		return $options[ $option ];
+	}
+
+	/**
+	 * Updates multiple options.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param array $options Options as $option => $value pairs.
+	 * @return bool True on success, false on failure.
+	 */
+	public function update_options( $options ) {
+		if ( $this->domain ) {
+			return $this->domain->update_options( $options );
+		}
+
+		$old_options = $this->get_options();
+
+		$new_options = array_merge( $old_options, $options );
+
+		return (bool) update_post_meta( $this->id, 'src_options', $new_options );
+	}
+
+	/**
+	 * Updates a single option.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param string $option Option name.
+	 * @param mixed  $value  Option value.
+	 * @return bool True on success, false on failure.
+	 */
+	public function update_option( $option, $value ) {
+		if ( $this->domain ) {
+			return $this->domain->update_option( $option, $value );
+		}
+
+		$options = $this->get_options();
+
+		$options[ $option ] = $value;
+
+		return (bool) update_post_meta( $this->id, 'src_options', $options );
 	}
 
 	/**

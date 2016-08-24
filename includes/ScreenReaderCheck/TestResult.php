@@ -44,6 +44,15 @@ class TestResult {
 	private $test_description = '';
 
 	/**
+	 * Further Reading links for the test performed.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $test_links = array();
+
+	/**
 	 * The check ID this result belongs to.
 	 *
 	 * @since 1.0.0
@@ -130,6 +139,18 @@ class TestResult {
 	 */
 	public function get_test_description() {
 		return $this->test_description;
+	}
+
+	/**
+	 * Returns the links of the test performed.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The test links.
+	 */
+	public function get_test_links() {
+		return $this->test_links;
 	}
 
 	/**

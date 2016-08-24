@@ -44,6 +44,15 @@ abstract class Test {
 	protected $description = '';
 
 	/**
+	 * Further Reading links for the test.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var array
+	 */
+	protected $links = array();
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
@@ -74,6 +83,7 @@ abstract class Test {
 		$result['test_slug'] = $this->slug;
 		$result['test_title'] = $this->title;
 		$result['test_description'] = $this->description;
+		$result['test_links'] = $this->links;
 		$result['check_id'] = $check_id;
 
 		return new TestResult( $result );
@@ -101,6 +111,30 @@ abstract class Test {
 	 */
 	public function get_title() {
 		return $this->title;
+	}
+
+	/**
+	 * Returns the description of this test.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The test description.
+	 */
+	public function get_description() {
+		return $this->description;
+	}
+
+	/**
+	 * Returns the links for this test.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The test links.
+	 */
+	public function get_links() {
+		return $this->links;
 	}
 
 	/**

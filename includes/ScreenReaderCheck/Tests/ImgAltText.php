@@ -41,10 +41,10 @@ class ImgAltText extends Test {
 	 * @param array                        $result The default result array with keys
 	 *                                             `type`, `messages` and `request_data`.
 	 * @param ScreenReaderCheck\Parser\Dom $dom    The DOM object to check.
-	 * @param array                        $args   Additional arguments.
+	 * @param ScreenReaderCheck\Check      $check  The check object.
 	 * @return array The modified result array.
 	 */
-	protected function run( $result, $dom, $args = array() ) {
+	protected function run( $result, $dom, $check ) {
 		$images = $dom->find( 'img' );
 
 		if ( count( $images ) === 0 ) {

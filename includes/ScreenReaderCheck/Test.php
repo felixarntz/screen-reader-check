@@ -68,23 +68,32 @@ abstract class Test {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param ScreenReaderCheck\Parser\Dom $dom      The DOM object to check.
-	 * @param int                          $check_id The check ID.
-	 * @param array                        $args     Additional arguments.
+	 * @param ScreenReaderCheck\Parser\Dom $dom   The DOM object to check.
+	 * @param ScreenReaderCheck\Check      $check The check object.
+	 * @param array                        $args  Additional arguments.
 	 * @return ScreenReaderCheck\TestResult The result for the test.
 	 */
-	public function get_result( $dom, $check_id, $args = array() ) {
+	public function get_result( $dom, $check, $args = array() ) {
+		if ( ! empty( $args ) ) {
+			$prefixed_args = array();
+			foreach ( $args as $option => $value ) {
+				$prefixed_args[ $this->slug . '_' . $option ] = $value;
+			}
+
+			$check->update_options( $prefixed_args );
+		}
+
 		$result = $this->run( array(
 			'type' => 'error',
 			'messages' => array(),
 			'request_data' => array(),
-		), $dom, $args );
+		), $dom, $check );
 
 		$result['test_slug'] = $this->slug;
 		$result['test_title'] = $this->title;
 		$result['test_description'] = $this->description;
 		$result['test_links'] = $this->links;
-		$result['check_id'] = $check_id;
+		$result['check_id'] = $check->get_id();
 
 		return new TestResult( $result );
 	}
@@ -146,10 +155,10 @@ abstract class Test {
 	 * @param array                        $result The default result array with keys
 	 *                                             `type`, `messages` and `request_data`.
 	 * @param ScreenReaderCheck\Parser\Dom $dom    The DOM object to check.
-	 * @param array                        $args   Additional arguments.
+	 * @param ScreenReaderCheck\Check      $check  The check object.
 	 * @return array The modified result array.
 	 */
-	protected abstract function run( $result, $dom, $args = array() );
+	protected abstract function run( $result, $dom, $check );
 
 	/**
 	 * Wraps a code snippet into a read-only textarea.

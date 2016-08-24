@@ -272,6 +272,7 @@ class Tests {
 					'test_slug'        => 'all_completed',
 					'test_title'       => __( 'Success', 'screen-reader-check' ),
 					'test_description' => '',
+					'test_links'       => array(),
 					'check_id'         => $check_id,
 					'type'             => 'success',
 					'messages'         => array( __( 'All tests completed.', 'screen-reader-check' ) ),

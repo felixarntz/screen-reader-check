@@ -217,10 +217,8 @@ class TestResult {
 			return false;
 		}
 
-		foreach ( $this->request_data as $request ) {
-			if ( empty( $request['value'] ) ) {
-				return false;
-			}
+		if ( ! empty( $this->request_data ) ) {
+			return false;
 		}
 
 		return true;

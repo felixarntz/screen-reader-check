@@ -109,17 +109,23 @@ class Checks {
 
 		$status = update_post_meta( $id, 'src_url', $args['url'] );
 		if ( ! $status && ! empty( $args['url'] ) ) {
+			$this->delete( $id );
 			return new WP_Error( 'could_not_store_check_url', __( 'An internal error occurred while trying to store the check URL.', 'screen-reader-check' ) );
 		}
 
 		$status = update_post_meta( $id, 'src_html', $args['html'] );
 		if ( ! $status ) {
+			$this->delete( $id );
 			return new WP_Error( 'could_not_store_check_html', __( 'An internal error occurred while trying to store the check HTML.', 'screen-reader-check' ) );
 		}
+
+		//$this->delete( $id );
+		//return new WP_Error( 'hahaha', 'Length: ' . strlen( $args['html'] ) );
 
 		if ( ! empty( $args['url'] ) ) {
 			$domain = $this->domains->get_by_url( $args['url'] );
 			if ( is_wp_error( $domain ) ) {
+				$this->delete( $id );
 				return $domain;
 			}
 

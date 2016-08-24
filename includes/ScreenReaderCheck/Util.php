@@ -48,6 +48,8 @@ class Util {
 	 * @return ScreenReaderCheck\Parser\Dom|null The DOM object, or null on parse error.
 	 */
 	public static function parse_html( $html ) {
+		libxml_use_internal_errors( true );
+
 		return Dom::parse( $html );
 	}
 

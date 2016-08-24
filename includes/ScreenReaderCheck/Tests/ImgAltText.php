@@ -67,7 +67,7 @@ class ImgAltText extends Test {
 			} else {
 				$src = $image->getAttribute( 'src' );
 				if ( is_string( $src ) && false !== strpos( $src, $alt ) ) {
-					$result['messages'] = __( 'The following image seems to have an auto-generated alt attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alt attributes should describe the image in clear human language.', 'screen-reader-check' );
+					$result['messages'][] = __( 'The following image seems to have an auto-generated alt attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alt attributes should describe the image in clear human language.', 'screen-reader-check' );
 					$has_errors = true;
 				}
 			}

@@ -192,13 +192,11 @@ class Domains {
 		}
 
 		?>
-		<form action="" method="post">
-			<h2 class="screen-reader-text"><?php _e( 'Delete a domain', 'screen-reader-check' ); ?></h2>
-			<label for="src_domain" class="screen-reader-text"><?php _e( 'Domain', 'screen-reader-check' ); ?></label>
-			<input type="text" id="src_domain" name="src_domain" class="widefat" />
-			<input type="hidden" name="action" value="src_delete_domain" />
-			<?php submit_button( __( 'Delete domain', 'screen-reader-check' ), 'delete', 'submit', false ); ?>
-		</form>
+		<h2 class="screen-reader-text"><?php _e( 'Delete a domain', 'screen-reader-check' ); ?></h2>
+		<label for="src_domain" class="screen-reader-text"><?php _e( 'Domain', 'screen-reader-check' ); ?></label>
+		<input type="text" id="src_domain" name="src_domain" />
+		<input type="hidden" name="action" value="src_delete_domain" />
+		<?php submit_button( __( 'Delete domain', 'screen-reader-check' ), 'delete', 'submit', false ); ?>
 		<?php
 	}
 
@@ -213,11 +211,13 @@ class Domains {
 			return;
 		}
 
+		$redirect = remove_query_arg( array( 'src_domain', 'action', 'src_domain_deleted' ) );
+
 		$domain = wp_unslash( $_REQUEST['src_domain'] );
 
 		$domain_obj = $this->get_by_domain( $domain );
 		if ( is_wp_error( $domain_obj ) ) {
-			wp_redirect( add_query_arg( 'src_domain_deleted', '0' ) );
+			wp_redirect( add_query_arg( 'src_domain_deleted', '0', $redirect ) );
 			exit;
 		}
 
@@ -228,7 +228,7 @@ class Domains {
 			$status = '1';
 		}
 
-		wp_redirect( add_query_arg( 'src_domain_deleted', $status ) );
+		wp_redirect( add_query_arg( 'src_domain_deleted', $status, $redirect ) );
 		exit;
 	}
 

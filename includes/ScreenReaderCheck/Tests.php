@@ -163,7 +163,13 @@ class Tests {
 			return $result;
 		}
 
-		if ( $done ) {
+		if ( $result->is_done() ) {
+			if ( ! $check->add_test_result( $result ) ) {
+				return new WP_Error( 'result_not_added', __( 'An error occurred while trying to add the test result.', 'screen-reader-check' ) );
+			}
+		}
+
+		/*if ( $done ) {
 			if ( ! $check->add_test_result( $result ) ) {
 				return new WP_Error( 'result_not_added', __( 'An error occurred while trying to add the test result.', 'screen-reader-check' ) );
 			}
@@ -171,7 +177,7 @@ class Tests {
 			if ( ! $check->update_test_result( $result, $last_result ) ) {
 				return new WP_Error( 'result_not_updated', __( 'An error occurred while trying to update the test result.', 'screen-reader-check' ) );
 			}
-		}
+		}*/
 
 		return $result;
 	}

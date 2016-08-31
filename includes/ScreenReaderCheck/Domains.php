@@ -213,9 +213,15 @@ class Domains {
 			return;
 		}
 
-		$redirect = remove_query_arg( array( 'src_domain', 'action', 'src_domain_deleted' ) );
-
 		$domain = wp_unslash( $_REQUEST['src_domain'] );
+
+		if ( empty( $domain ) ) {
+			unset( $_REQUEST['action'] );
+			unset( $_REQUEST['src_domain'] );
+			return;
+		}
+
+		$redirect = remove_query_arg( array( 'src_domain', 'action', 'src_domain_deleted' ) );
 
 		$domain_obj = $this->get_by_domain( $domain );
 		if ( is_wp_error( $domain_obj ) ) {
@@ -245,8 +251,10 @@ class Domains {
 			return;
 		}
 
+		unset( $_REQUEST['src_domain_deleted'] );
+
 		$result = absint( $_REQUEST['src_domain_deleted'] );
-		if ( $result ) {
+		if ( ! $result ) {
 			?>
 			<div class="notice notice-error">
 				<p><?php _e( 'Domain could not be deleted.', 'screen-reader-check' ); ?></p>

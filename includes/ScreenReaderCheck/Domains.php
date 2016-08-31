@@ -192,11 +192,13 @@ class Domains {
 		}
 
 		?>
-		<h2 class="screen-reader-text"><?php _e( 'Delete a domain', 'screen-reader-check' ); ?></h2>
-		<label for="src_domain" class="screen-reader-text"><?php _e( 'Domain', 'screen-reader-check' ); ?></label>
-		<input type="text" id="src_domain" name="src_domain" />
-		<input type="hidden" name="action" value="src_delete_domain" />
-		<?php submit_button( __( 'Delete domain', 'screen-reader-check' ), 'delete', 'submit', false ); ?>
+		<div class="alignleft actions">
+			<h2 class="screen-reader-text"><?php _e( 'Delete a domain', 'screen-reader-check' ); ?></h2>
+			<label for="src_domain" class="screen-reader-text"><?php _e( 'Domain', 'screen-reader-check' ); ?></label>
+			<input type="text" id="src_domain" name="src_domain" />
+			<input type="hidden" name="action" value="src_delete_domain" />
+			<?php submit_button( __( 'Delete domain', 'screen-reader-check' ), 'delete', 'submit', false ); ?>
+		</div>
 		<?php
 	}
 

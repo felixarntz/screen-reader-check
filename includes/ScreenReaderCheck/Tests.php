@@ -77,6 +77,42 @@ class Tests {
 	}
 
 	/**
+	 * Runs a specific test on a given check and returns the result.
+	 *
+	 * Does not save the test result in the check object.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param int|ScreenReaderCheck\Check   $check Check object or ID.
+	 * @param string|ScreenReaderCheck\Test $test  Test object or slug.
+	 * @param array                         $args  Test arguments.
+	 * @return ScreenReaderCheck\TestResult|WP_Error The test result, or an error object on failure.
+	 */
+	public function run_test( $check, $test, $args = array() ) {
+		if ( is_numeric( $check ) ) {
+			$check = $this->checks->get( $check );
+			if ( is_wp_error( $check ) ) {
+				return $check;
+			}
+		}
+
+		if ( is_string( $test ) ) {
+			$test = $this->get_test( $test );
+			if ( ! $test ) {
+				return new WP_Error( 'test_not_found', __( 'The test to perform was not found.', 'screen-reader-check' ) );
+			}
+		}
+
+		$dom = Util::parse_html( $check->get_html() );
+		if ( ! $dom ) {
+			return new WP_Error( 'could_not_parse_html', __( 'The HTML code could not be parsed.', 'screen-reader-check' ) );
+		}
+
+		return $test->get_result( $dom, $check, $args );
+	}
+
+	/**
 	 * Runs the next test for a given check.
 	 *
 	 * Note that there is one specific error object that can be returned which does not
@@ -115,30 +151,25 @@ class Tests {
 		}
 
 		if ( false === $test ) {
-			return new WP_Error( 'test_not_found', __( 'An internal error occurred. The test to perform was not found.', 'screen-reader-check' ) );
+			return new WP_Error( 'test_not_found', __( 'The test to perform was not found.', 'screen-reader-check' ) );
 		}
 
 		if ( true === $test ) {
 			return new WP_Error( 'check_completed', __( 'All tests for this check have already completed.', 'screen-reader-check' ) );
 		}
 
-		$dom = Util::parse_html( $check->get_html() );
-		if ( ! $dom ) {
-			return new WP_Error( 'could_not_parse_html', __( 'The HTML code could not be parsed.', 'screen-reader-check' ) );
-		}
-
-		$result = $test->get_result( $dom, $check, $args );
+		$result = $this->run_test( $check, $test, $args );
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}
 
 		if ( $done ) {
 			if ( ! $check->add_test_result( $result ) ) {
-				return new WP_Error( 'result_not_added', __( 'An internal error occurred. It was not possible to add the test result.', 'screen-reader-check' ) );
+				return new WP_Error( 'result_not_added', __( 'An error occurred while trying to add the test result.', 'screen-reader-check' ) );
 			}
 		} else {
 			if ( ! $check->update_test_result( $result, $last_result ) ) {
-				return new WP_Error( 'result_not_updated', __( 'An internal error occurred. It was not possible to update the test result.', 'screen-reader-check' ) );
+				return new WP_Error( 'result_not_updated', __( 'An error occurred while trying to update the test result.', 'screen-reader-check' ) );
 			}
 		}
 

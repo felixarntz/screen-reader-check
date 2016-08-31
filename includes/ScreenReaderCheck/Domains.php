@@ -32,19 +32,12 @@ class Domains {
 	public function get_by_url( $url ) {
 		$domain = parse_url( $url, PHP_URL_HOST );
 
-		$posts = get_posts( array(
-			'posts_per_page' => 1,
-			'fields'         => 'ids',
-			'post_type'      => 'src_domain',
-			'post_status'    => 'publish',
-			'title'          => $domain,
-		) );
-
-		if ( empty( $posts ) ) {
+		$domain_obj = $this->get_by_domain( $domain );
+		if ( is_wp_error( $domain_obj ) ) {
 			return $this->create( $domain );
 		}
 
-		return $this->get( $posts[0] );
+		return $domain_obj;
 	}
 
 	/**
@@ -123,6 +116,9 @@ class Domains {
 	public function __call( $method, $args ) {
 		switch ( $method ) {
 			case 'register_post_type':
+			case 'render_delete_domain':
+			case 'handle_delete_domain':
+			case 'maybe_show_domain_deleted_notice':
 				return call_user_func_array( array( $this, $method ), $args );
 		}
 	}
@@ -176,5 +172,115 @@ class Domains {
 			'items_list_navigation' => __( 'Domains list navigation', 'screen-reader-check' ),
 			'items_list'            => __( 'Domains list', 'screen-reader-check' ),
 		);
+	}
+
+	/**
+	 * Renders a small form to delete a specific URL.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param string $which Where this form is rendered. Either 'top' or 'bottom'.
+	 */
+	private function render_delete_domain( $which ) {
+		if ( 'top' !== $which ) {
+			return;
+		}
+
+		if ( 'src_check' !== get_current_screen()->post_type ) {
+			return;
+		}
+
+		?>
+		<form action="" method="post">
+			<h2 class="screen-reader-text"><?php _e( 'Delete a domain', 'screen-reader-check' ); ?></h2>
+			<label for="src_domain" class="screen-reader-text"><?php _e( 'Domain', 'screen-reader-check' ); ?></label>
+			<input type="text" id="src_domain" name="src_domain" class="widefat" />
+			<input type="hidden" name="action" value="src_delete_domain" />
+			<?php submit_button( __( 'Delete domain', 'screen-reader-check' ), 'delete', 'submit', false ); ?>
+		</form>
+		<?php
+	}
+
+	/**
+	 * Handles requests where a domain should be deleted.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 */
+	private function handle_delete_domain() {
+		if ( ! isset( $_REQUEST['src_domain'] ) ) {
+			return;
+		}
+
+		$domain = wp_unslash( $_REQUEST['src_domain'] );
+
+		$domain_obj = $this->get_by_domain( $domain );
+		if ( is_wp_error( $domain_obj ) ) {
+			wp_redirect( add_query_arg( 'src_domain_deleted', '0' ) );
+			exit;
+		}
+
+		$status = $this->delete( $domain_obj->get_id() );
+		if ( is_wp_error( $status ) ) {
+			$status = '0';
+		} else {
+			$status = '1';
+		}
+
+		wp_redirect( add_query_arg( 'src_domain_deleted', $status ) );
+		exit;
+	}
+
+	/**
+	 * Prints an admin notice after a domain has been deleted.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 */
+	private function maybe_show_domain_deleted_notice() {
+		if ( ! isset( $_REQUEST['src_domain_deleted'] ) ) {
+			return;
+		}
+
+		$result = absint( $_REQUEST['src_domain_deleted'] );
+		if ( $result ) {
+			?>
+			<div class="notice notice-error">
+				<p><?php _e( 'Domain could not be deleted.', 'screen-reader-check' ); ?></p>
+			</div>
+			<?php
+		} else {
+			?>
+			<div class="notice notice-success">
+				<p><?php _e( 'Domain deleted.', 'screen-reader-check' ); ?></p>
+			</div>
+			<?php
+		}
+	}
+
+	/**
+	 * Returns a domain object by a given domain.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param string $domain Domain to get the domain object for.
+	 * @return ScreenReaderCheck\Domain|WP_Error Either the domain object, or an error object on failure.
+	 */
+	private function get_by_domain( $domain ) {
+		$posts = get_posts( array(
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'post_type'      => 'src_domain',
+			'post_status'    => 'publish',
+			'title'          => $domain,
+		) );
+
+		if ( empty( $posts ) ) {
+			return new WP_Error( 'domain_not_found', sprintf( __( 'The domain %s could not be found.', 'screen-reader-check' ), $domain ) );
+		}
+
+		return $this->get( $posts[0] );
 	}
 }

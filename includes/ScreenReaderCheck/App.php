@@ -149,6 +149,9 @@ class App {
 
 		$this->domains = new Domains();
 		add_action( 'init', array( $this->domains, 'register_post_type' ) );
+		add_action( 'manage_posts_extra_tablenav', array( $this->domains, 'render_delete_domain' ) );
+		add_action( 'admin_action_src_delete_domain', array( $this->domains, 'handle_delete_domain' ) );
+		add_action( 'admin_notices', array( $this->domains, 'maybe_show_domain_deleted_notice' ) );
 
 		$this->checks = new Checks( $this->domains );
 		add_action( 'init', array( $this->checks, 'register_post_type' ) );

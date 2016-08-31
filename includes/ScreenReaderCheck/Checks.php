@@ -170,6 +170,9 @@ class Checks {
 		$url = get_post_meta( $id, 'src_url', true );
 		if ( $url ) {
 			$domain = $this->domains->get_by_url( $url );
+			if ( is_wp_error( $domain ) ) {
+				return $domain;
+			}
 		} else {
 			$domain = null;
 		}

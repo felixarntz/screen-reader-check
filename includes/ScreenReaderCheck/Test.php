@@ -230,6 +230,19 @@ abstract class Test {
 	}
 
 	/**
+	 * Sanitizes a source.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
+	 * @param string $src A source URL.
+	 * @return The sanitized source.
+	 */
+	protected function sanitize_src( $src ) {
+		return str_replace( array( '../', './', '://', '/', '.' ), '--', $src );
+	}
+
+	/**
 	 * Transforms a source path into a link.
 	 *
 	 * If the path is relative, the full URL is constructed if possible.

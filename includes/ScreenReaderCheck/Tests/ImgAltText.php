@@ -62,7 +62,7 @@ class ImgAltText extends Test {
 				$has_errors = true;
 			} elseif ( empty( $alt ) ) {
 				$src = $image->getAttribute( 'src' );
-				$image_type = $this->get_option( 'image_type_' . $src );
+				$image_type = $this->get_option( 'image_type_' . $this->sanitize_src( $src ) );
 				if ( $image_type ) {
 					if ( 'content' === $image_type ) {
 						$result['messages'][] = $this->wrap_message( __( 'The following image has an empty alt attribute although it is part of the content:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'An empty alt attribute is only acceptable for decorative images.', 'screen-reader-check' ), $image->getLineNo() );
@@ -70,7 +70,7 @@ class ImgAltText extends Test {
 					}
 				} else {
 					$result['request_data'][] = array(
-						'slug'          => 'image_type_' . $src,
+						'slug'          => 'image_type_' . $this->sanitize_src( $src ),
 						'type'          => 'select',
 						'label'         => __( 'Image Type', 'screen-reader-check' ),
 						'description'   => sprintf( __( 'Choose whether the image %s is a decorative image or part of actual content.', 'screen-reader-check' ), $this->linkify_src( $src ) ),

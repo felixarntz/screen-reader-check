@@ -75,8 +75,14 @@ class ImgAltText extends Test {
 						'label'         => __( 'Image Type', 'screen-reader-check' ),
 						'description'   => sprintf( __( 'Choose whether the image %s is a decorative image or part of actual content.', 'screen-reader-check' ), $this->linkify_src( $src ) ),
 						'options'       => array(
-							'content'     => __( 'Part of content', 'screen-reader-check' ),
-							'decorative'  => __( 'Decorative', 'screen-reader-check' ),
+							array(
+								'value'   => 'content',
+								'label'   => __( 'Part of content', 'screen-reader-check' ),
+							),
+							array(
+								'value'   => 'decorative',
+								'label'   => __( 'Decorative', 'screen-reader-check' ),
+							),
 						),
 						'default'       => 'content',
 					);

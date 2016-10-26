@@ -121,6 +121,18 @@ class Node {
 	}
 
 	/**
+	 * Returns the tag name of this node.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string Tag name.
+	 */
+	public function getTagName() {
+		return strtolower( $this->domNode->tagName );
+	}
+
+	/**
 	 * Returns all attributes of this node.
 	 *
 	 * @since 1.0.0
@@ -254,6 +266,18 @@ class Node {
 	 */
 	public function hasChildren( $includeText = false ) {
 		return (bool) $this->getChildren( $includeText );
+	}
+
+	/**
+	 * Checks whether this node is a text node.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return bool True if it is a text node, false otherwise.
+	 */
+	public function isTextNode() {
+		return $this->domNode->nodeType !== XML_ELEMENT_NODE;
 	}
 
 	/**

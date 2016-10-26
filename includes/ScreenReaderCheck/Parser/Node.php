@@ -60,12 +60,13 @@ class Node {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param string $selector The query selector.
-	 * @param bool   $single   Optional. Whether to only return a single result. Default false.
+	 * @param string $selector    The query selector.
+	 * @param bool   $includeText Optional. Whether to include text nodes. Default false.
+	 * @param bool   $single      Optional. Whether to only return a single result. Default false.
 	 * @return array|Node|null Array of results, or a single node (or null if nothing found) depending on $single.
 	 */
-	public function find( $selector, $single = false ) {
-		$nodes = $this->parseNodes( $this->domXPath->evaluate( $this->parseSelector( $selector ), $this->domNode ) );
+	public function find( $selector, $includeText = false, $single = false ) {
+		$nodes = $this->parseNodes( $this->domXPath->evaluate( $this->parseSelector( $selector ), $this->domNode ), $includeText );
 
 		if ( $single ) {
 			if ( ! isset( $nodes[0] ) ) {
@@ -235,10 +236,11 @@ class Node {
 	 * @since 1.0.0
 	 * @access public
 	 *
+	 * @param bool $includeText Optional. Whether to include text nodes. Default false.
 	 * @return array Array of ScreenReaderCheck\Parser\Node objects.
 	 */
-	public function getChildren() {
-		return $this->parseNodes( $this->domNode->childNodes );
+	public function getChildren( $includeText = false ) {
+		return $this->parseNodes( $this->domNode->childNodes, $includeText );
 	}
 
 	/**
@@ -247,10 +249,11 @@ class Node {
 	 * @since 1.0.0
 	 * @access public
 	 *
+	 * @param bool $includeText Optional. Whether to include text nodes. Default false.
 	 * @return bool True if child nodes exist, false otherwise.
 	 */
-	public function hasChildren() {
-		return (bool) $this->getChildren();
+	public function hasChildren( $includeText = false ) {
+		return (bool) $this->getChildren( $includeText );
 	}
 
 	/**
@@ -282,9 +285,10 @@ class Node {
 	 * @access protected
 	 *
 	 * @param DOMNodeList $domNodeList Node list object.
+	 * @param bool        $includeText Optional. Whether to include text nodes. Default false.
 	 * @return array Array of ScreenReaderCheck\Parser\Node objects.
 	 */
-	protected function parseNodes( $domNodeList ) {
+	protected function parseNodes( $domNodeList, $includeText = false ) {
 		if ( ! is_a( $domNodeList, 'DOMNodeList' ) ) {
 			return array();
 		}
@@ -293,7 +297,7 @@ class Node {
 
 		for ( $i = 0; $i < $domNodeList->length; $i++ ) {
 			$item = $domNodeList->item( $i );
-			if ( $item->nodeType !== XML_ELEMENT_NODE ) {
+			if ( ! $includeText && $item->nodeType !== XML_ELEMENT_NODE ) {
 				continue;
 			}
 

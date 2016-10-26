@@ -60,6 +60,9 @@ class Tests {
 			'GraphicalUIAlternativeTextsLinks',
 			'GraphicalUIAlternativeTextsButtons',
 			'GraphicalUIAlternativeTextsImageMaps',
+			'ImagesAlternativeTexts',
+			'ObjectsAlternativeTexts',
+			'CaptchasAlternativeTexts',
 		);
 
 		$index = 0;

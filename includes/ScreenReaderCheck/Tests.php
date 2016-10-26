@@ -57,7 +57,9 @@ class Tests {
 	 */
 	public function __construct( $checks ) {
 		$class_names = array(
-			'ImgAltText',
+			'GraphicalUIAlternativeTextsLinks',
+			'GraphicalUIAlternativeTextsButtons',
+			'GraphicalUIAlternativeTextsImageMaps',
 		);
 
 		$index = 0;

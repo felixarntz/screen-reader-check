@@ -44,6 +44,24 @@ class TestResult {
 	private $test_description = '';
 
 	/**
+	 * The title of the test-related guideline.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $test_guideline_title = '';
+
+	/**
+	 * The anchor ID of the test-related guideline in https://www.w3.org/TR/WCAG20/.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $test_guideline_anchor = '';
+
+	/**
 	 * Further Reading links for the test performed.
 	 *
 	 * @since 1.0.0
@@ -139,6 +157,30 @@ class TestResult {
 	 */
 	public function get_test_description() {
 		return $this->test_description;
+	}
+
+	/**
+	 * Returns the title of the test-related guideline.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The guideline title.
+	 */
+	public function get_test_guideline_title() {
+		return $this->test_guideline_title;
+	}
+
+	/**
+	 * Returns the anchor ID of the test-related guideline in https://www.w3.org/TR/WCAG20/.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The guideline anchor ID.
+	 */
+	public function get_test_guideline_anchor() {
+		return $this->test_guideline_anchor;
 	}
 
 	/**

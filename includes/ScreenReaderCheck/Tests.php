@@ -296,15 +296,17 @@ class Tests {
 		if ( is_wp_error( $result ) ) {
 			if ( 'check_completed' === $result->get_error_code() ) {
 				return array(
-					'test_slug'        => 'all_completed',
-					'test_title'       => __( 'Success', 'screen-reader-check' ),
-					'test_description' => '',
-					'test_links'       => array(),
-					'check_id'         => $check_id,
-					'type'             => 'success',
-					'messages'         => array( __( 'All tests completed.', 'screen-reader-check' ) ),
-					'request_data'     => array(),
-					'check_complete'   => true,
+					'test_slug'             => 'all_completed',
+					'test_title'            => __( 'Success', 'screen-reader-check' ),
+					'test_description'      => '',
+					'test_guideline_title'  => '',
+					'test_guideline_anchor' => '',
+					'test_links'            => array(),
+					'check_id'              => $check_id,
+					'type'                  => 'success',
+					'messages'              => array( __( 'All tests completed.', 'screen-reader-check' ) ),
+					'request_data'          => array(),
+					'check_complete'        => true,
 				);
 			}
 			return $result;

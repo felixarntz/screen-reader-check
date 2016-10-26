@@ -44,6 +44,24 @@ abstract class Test {
 	protected $description = '';
 
 	/**
+	 * The title of the related guideline.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $guideline_title = '';
+
+	/**
+	 * The anchor ID of the related guideline in https://www.w3.org/TR/WCAG20/.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var string
+	 */
+	protected $guideline_anchor = '';
+
+	/**
 	 * Further Reading links for the test.
 	 *
 	 * @since 1.0.0
@@ -113,11 +131,13 @@ abstract class Test {
 			$result['messages'] = array();
 		}
 
-		$result['test_slug'] = $this->slug;
-		$result['test_title'] = $this->title;
-		$result['test_description'] = $this->description;
-		$result['test_links'] = $this->links;
-		$result['check_id'] = $this->check->get_id();
+		$result['test_slug']             = $this->slug;
+		$result['test_title']            = $this->title;
+		$result['test_description']      = $this->description;
+		$result['test_guideline_title']  = $this->guideline_title;
+		$result['test_guideline_anchor'] = $this->guideline_anchor;
+		$result['test_links']            = $this->links;
+		$result['check_id']              = $this->check->get_id();
 
 		$this->check = null;
 
@@ -170,6 +190,30 @@ abstract class Test {
 	 */
 	public function get_links() {
 		return $this->links;
+	}
+
+	/**
+	 * Returns the title of the related guideline.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The guideline title.
+	 */
+	public function get_guideline_title() {
+		return $this->guideline_title;
+	}
+
+	/**
+	 * Returns the anchor ID of the related guideline in https://www.w3.org/TR/WCAG20/.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return string The guideline anchor ID.
+	 */
+	public function get_guideline_anchor() {
+		return $this->guideline_anchor;
 	}
 
 	/**

@@ -58,14 +58,14 @@ class ImgAltText extends Test {
 		foreach ( $images as $image ) {
 			$alt = $image->getAttribute( 'alt' );
 			if ( null === $alt ) {
-				$result['messages'][] = $this->wrap_message( __( 'The following image is missing an alt attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
+				$result['messages'][] = $this->wrap_message( __( 'The following image is missing an <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 				$has_errors = true;
 			} elseif ( empty( $alt ) ) {
 				$src = $image->getAttribute( 'src' );
 				$image_type = $this->get_option( 'image_type_' . $this->sanitize_src( $src ) );
 				if ( $image_type ) {
 					if ( 'content' === $image_type ) {
-						$result['messages'][] = $this->wrap_message( __( 'The following image has an empty alt attribute although it is part of the content:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'An empty alt attribute is only acceptable for decorative images.', 'screen-reader-check' ), $image->getLineNo() );
+						$result['messages'][] = $this->wrap_message( __( 'The following image has an empty <code>alt</code> attribute although it is part of the content:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'An empty alt attribute is only acceptable for decorative images.', 'screen-reader-check' ), $image->getLineNo() );
 						$has_errors = true;
 					}
 				} else {
@@ -90,7 +90,7 @@ class ImgAltText extends Test {
 			} else {
 				$src = $image->getAttribute( 'src' );
 				if ( is_string( $src ) && false !== strpos( $src, $alt ) ) {
-					$result['messages'][] = $this->wrap_message( __( 'The following image seems to have an auto-generated alt attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alt attributes should describe the image in clear human language.', 'screen-reader-check' ), $image->getLineNo() );
+					$result['messages'][] = $this->wrap_message( __( 'The following image seems to have an auto-generated <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alt attributes should describe the image in clear human language.', 'screen-reader-check' ), $image->getLineNo() );
 					$has_errors = true;
 				}
 			}
@@ -100,7 +100,7 @@ class ImgAltText extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
-			$result['messages'][] = __( 'All images in the HTML code have valid <code>alt</code> tags provided.', 'screen-reader-check' );
+			$result['messages'][] = __( 'All images in the HTML code have valid <code>alt</code> attributes provided.', 'screen-reader-check' );
 		}
 
 		return $result;

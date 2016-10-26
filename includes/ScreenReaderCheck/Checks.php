@@ -145,9 +145,9 @@ class Checks {
 				return $domain;
 			}
 
-			$domain->update_options( $args['options'] );
+			$domain->update_options( $this->globalize_options( $args['options'] ) );
 		} else {
-			update_post_meta( $id, 'src_options', $args['options'] );
+			update_post_meta( $id, 'src_options', $this->globalize_options( $args['options'] ) );
 		}
 
 		return $this->get( $id );
@@ -220,6 +220,25 @@ class Checks {
 			case 'ajax_create':
 				return call_user_func_array( array( $this, $method ), $args );
 		}
+	}
+
+	/**
+	 * Prefixes all passed options with 'global_'.
+	 *
+	 * This is done in order to differentiate between global and test options.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param array $options The options to prefix.
+	 * @return The prefixed options.
+	 */
+	private function globalize_options( $options ) {
+		$globalized_options = array();
+		foreach ( $options as $key => $value ) {
+			$globalized_options[ 'global_' . $key ] = $value;
+		}
+		return $globalized_options;
 	}
 
 	/**

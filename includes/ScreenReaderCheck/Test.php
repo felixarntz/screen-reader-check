@@ -274,6 +274,50 @@ abstract class Test {
 	}
 
 	/**
+	 * Returns all global options for the current check.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
+	 * @return array Global options as $option => $value pairs.
+	 */
+	protected function get_global_options() {
+		if ( ! $this->check ) {
+			return array();
+		}
+
+		$all_options = $this->check->get_options();
+
+		$global_options = array();
+		foreach ( $all_options as $key => $value ) {
+			if ( 0 !== strpos( $key, 'global_' ) ) {
+				continue;
+			}
+
+			$global_options[ substr( $key, strlen( 'global_' ) ) ] = $value;
+		}
+
+		return $global_options;
+	}
+
+	/**
+	 * Returns the value for a specific global option for the current check.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
+	 * @param string $option Name of the option to get.
+	 * @return mixed The value of the global option, or null if not specified.
+	 */
+	protected function get_global_option( $option ) {
+		if ( ! $this->check ) {
+			return null;
+		}
+
+		return $this->check->get_option( 'global_' . $option );
+	}
+
+	/**
 	 * Sanitizes a source.
 	 *
 	 * @since 1.0.0

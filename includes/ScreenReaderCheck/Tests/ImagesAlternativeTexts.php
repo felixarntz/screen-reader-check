@@ -76,13 +76,15 @@ class ImagesAlternativeTexts extends Test {
 		foreach ( $images as $image ) {
 			// Skip CAPTCHAs.
 			$class = $image->getAttribute( 'class' );
-			if ( is_string( $class ) && false !== strpos( $class, 'captcha' ) ) {
+			if ( is_string( $class ) && false !== stripos( $class, 'captcha' ) ) {
 				continue;
 			}
-
-			// Skip CAPTCHAs.
 			$id = $image->getAttribute( 'id' );
-			if ( is_string( $id ) && false !== strpos( $id, 'captcha' ) ) {
+			if ( is_string( $id ) && false !== stripos( $id, 'captcha' ) ) {
+				continue;
+			}
+			$src = $image->getAttribute( 'src' );
+			if ( is_string( $src ) && false !== stripos( $src, 'captcha' ) ) {
 				continue;
 			}
 

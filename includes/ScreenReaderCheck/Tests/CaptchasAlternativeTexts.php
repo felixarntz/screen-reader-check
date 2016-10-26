@@ -63,11 +63,11 @@ class CaptchasAlternativeTexts extends Test {
 		foreach ( $images as $image ) {
 			// Assume that CAPTCHAs can be detected through one of its primary attributes.
 			$class = $image->getAttribute( 'class' );
-			if ( is_string( $class ) && false === stripos( $class, 'captcha' ) ) {
+			if ( ! is_string( $class ) || false === stripos( $class, 'captcha' ) ) {
 				$id = $image->getAttribute( 'id' );
-				if ( is_string( $id ) && false === stripos( $id, 'captcha' ) ) {
+				if ( ! is_string( $id ) || false === stripos( $id, 'captcha' ) ) {
 					$src = $image->getAttribute( 'src' );
-					if ( is_string( $src ) && false === stripos( $src, 'captcha' ) ) {
+					if ( ! is_string( $src ) || false === stripos( $src, 'captcha' ) ) {
 						continue;
 					}
 				}

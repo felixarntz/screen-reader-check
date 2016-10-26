@@ -151,7 +151,7 @@ class ImagesAlternativeTexts extends Test {
 							$result['messages'][] = $this->wrap_message( __( 'The following image uses a non-descriptive <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alternative texts should describe the image in clear human language, or be empty for decorative images.', 'screen-reader-check' ), $image->getLineNo() );
 							$has_errors = true;
 						} else {
-							if ( 80 < strlen( $src ) ) {
+							if ( 80 < strlen( $alt ) ) {
 								$result['messages'][] = $this->wrap_message( __( 'The following image uses a very long <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'If a longer description is necessary for the image, the <code>longdesc</code> attribute should be used.', 'screen-reader-check' ), $image->getLineNo() );
 								$has_errors = true;
 							}

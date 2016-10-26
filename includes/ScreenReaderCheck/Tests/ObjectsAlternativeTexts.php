@@ -96,7 +96,7 @@ class ObjectsAlternativeTexts extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
-			$result['messages'][] = __( 'All images in the HTML code have valid <code>alt</code> attributes provided.', 'screen-reader-check' );
+			$result['messages'][] = __( 'All objects in the HTML code have valid alternatives provided.', 'screen-reader-check' );
 		}
 
 		return $result;

@@ -64,6 +64,9 @@ class Tests {
 			'ObjectsAlternativeTexts',
 			'CaptchasAlternativeTexts',
 			'VideoAlternatives',
+			'StructuralHeadings',
+			'StructuralLists',
+			'StructuralQuotes',
 		);
 
 		$index = 0;

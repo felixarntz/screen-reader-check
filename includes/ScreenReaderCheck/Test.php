@@ -356,6 +356,28 @@ abstract class Test {
 	}
 
 	/**
+	 * Checks whether the source has a specific file extension.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 *
+	 * @param string       $src        The source.
+	 * @param string|array $extensions String or array of file extensions to check for.
+	 * @return bool True whether the source has one of the extensions, false otherwise.
+	 */
+	protected function src_has_extension( $src, $extensions ) {
+		$extensions = (array) $extensions;
+
+		$regex = '/\.(' . implode( '|', $extensions ) . ')(\?|$)/i';
+
+		if ( preg_match( $regex, $src ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Wraps a message including its line number.
 	 *
 	 * @since 1.0.0

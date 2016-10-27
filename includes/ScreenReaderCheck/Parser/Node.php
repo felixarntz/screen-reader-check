@@ -117,6 +117,10 @@ class Node {
 	 * @return string The text output.
 	 */
 	public function text() {
+		if ( $this->isTextNode() ) {
+			return $this->domNode->wholeText;
+		}
+
 		return $this->domNode->textContent;
 	}
 

@@ -63,6 +63,7 @@ class Tests {
 			'ImagesAlternativeTexts',
 			'ObjectsAlternativeTexts',
 			'CaptchasAlternativeTexts',
+			'VideoAlternatives',
 		);
 
 		$index = 0;

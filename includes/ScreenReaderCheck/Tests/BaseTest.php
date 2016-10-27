@@ -31,7 +31,7 @@ class BaseTest extends Test {
 		$this->title            = __( 'Base Test', 'screen-reader-check' );
 		$this->description      = __( 'Base Test Description', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.1.1 Non-text Content', 'screen-reader-check' );
-		$this->guideline_anchor = 'text-equiv';
+		$this->guideline_anchor = 'text-equiv-all';
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/H30',

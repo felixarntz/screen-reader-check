@@ -119,6 +119,7 @@ class ImagesAlternativeTexts extends Test {
 						}
 					} else {
 						if ( ! in_array( $sanitized_src, $image_requests ) ) {
+							$image_requests[] = $sanitized_src;
 							$result['request_data'][] = array(
 								'slug'          => 'image_type_' . $sanitized_src,
 								'type'          => 'select',

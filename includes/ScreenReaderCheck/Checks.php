@@ -135,9 +135,6 @@ class Checks {
 			//}
 		}
 
-		//$this->delete( $id );
-		//return new WP_Error( 'hahaha', 'Length: ' . strlen( $args['html'] ) );
-
 		if ( ! empty( $args['url'] ) ) {
 			$domain = $this->domains->get_by_url( $args['url'] );
 			if ( is_wp_error( $domain ) ) {

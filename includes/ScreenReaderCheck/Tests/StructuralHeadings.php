@@ -131,7 +131,7 @@ class StructuralHeadings extends Test {
 		foreach ( $headings as $heading ) {
 			$tag_name = $heading->getTagName();
 
-			$lines[] = $tag_name . ': ' . $heading->text();
+			$lines[] = $tag_name . ': ' . trim( $heading->text() );
 
 			$number = intval( substr( $tag_name, 1, 1 ) );
 

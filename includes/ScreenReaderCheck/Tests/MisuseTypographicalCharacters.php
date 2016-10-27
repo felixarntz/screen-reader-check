@@ -56,13 +56,13 @@ class MisuseTypographicalCharacters extends Test {
 			}
 
 			$whitespace = array();
-			if ( preg_match( '/(&nbsp;){2,}/m', $element->text(), $whitespace ) ) {
+			if ( preg_match( '/(&nbsp;){2,}/m', trim( $element->text() ), $whitespace ) ) {
 				$result['messages'][] = $this->wrap_message( __( 'Whitespace must not be used to format text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $whitespace[0] ), $element->getLineNo() );
 				$has_errors = true;
 			}
 
 			$hyphen = array();
-			if ( preg_match( '/(\-\-\-|___)+/m', $element->text(), $hyphen ) ) {
+			if ( preg_match( '/(\-\-\-|___)+/m', trim( $element->text() ), $hyphen ) ) {
 				$result['messages'][] = $this->wrap_message( __( 'Whitespace must not be used to format text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $hyphen[0] ), $element->getLineNo() );
 				$has_errors = true;
 			}

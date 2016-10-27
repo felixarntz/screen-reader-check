@@ -58,9 +58,12 @@ class OrganizedContent extends Test {
 		$has_errors = false;
 		$has_warnings = false;
 
-		$double_breaks = $dom->find( 'br + br' );
+		$double_breaks = $dom->find( 'br' );
 		foreach ( $double_breaks as $last_break ) {
 			$first_break = $last_break->getPrevious();
+			if ( 'br' !== $first_break->getTagName() ) {
+				continue;
+			}
 
 			$result['messages'][] = $this->wrap_message( __( 'Actual paragraph markup must be used instead of the following occurrence of two <code>br</code> tags:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $first_break->outerHtml() . $last_break->outerHtml() ), $first_break->getLineNo() );
 			$has_errors = true;

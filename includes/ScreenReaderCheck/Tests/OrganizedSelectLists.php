@@ -67,7 +67,7 @@ class OrganizedSelectLists extends Test {
 			if ( count( $optgroups ) === 0 ) {
 				$options = $select->find( 'option' );
 				foreach ( $options as $option ) {
-					$text = $option->text();
+					$text = trim( $option->text() );
 					if ( preg_match( '/^(&nbsp;|&rarr;|&gt;|\-|_)/', $text ) ) {
 						$result['messages'][] = $this->wrap_message( __( 'The following select list uses typographic characters to indicate groups:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $select->outerHtml() ), $select->getLineNo() );
 						$has_errors = true;

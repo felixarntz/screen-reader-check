@@ -31,7 +31,7 @@ class ObjectsAlternativeTexts extends Test {
 		$this->title            = __( 'Alternative texts for objects', 'screen-reader-check' );
 		$this->description      = __( 'Embedded multimedia objects should have alternative content. If using an alternative text, it should at least provide a description of the content.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.1.1 Non-text Content', 'screen-reader-check' );
-		$this->guideline_anchor = 'text-equiv';
+		$this->guideline_anchor = 'text-equiv-all';
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/H53',

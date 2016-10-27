@@ -31,7 +31,7 @@ class ImagesAlternativeTexts extends Test {
 		$this->title            = __( 'Alternative texts for images', 'screen-reader-check' );
 		$this->description      = __( 'Informative images must have alternative texts that should (if possible) serve the same purpose as the image itself. Images that do not have an informative purpose, such as spacers or decorative images, do not require an alternative text, but should use an empty <code>alt</code> attribute.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.1.1 Non-text Content', 'screen-reader-check' );
-		$this->guideline_anchor = 'text-equiv';
+		$this->guideline_anchor = 'text-equiv-all';
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/H37',

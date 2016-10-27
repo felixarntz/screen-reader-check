@@ -31,7 +31,7 @@ class CaptchasAlternativeTexts extends Test {
 		$this->title            = __( 'Alternative texts for CAPTCHAs', 'screen-reader-check' );
 		$this->description      = __( 'For image-based CAPTCHAs, the alternative text should describe the purpose of the CAPTCHA and where to find a non-image-based alternative.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.1.1 Non-text Content', 'screen-reader-check' );
-		$this->guideline_anchor = 'text-equiv';
+		$this->guideline_anchor = 'text-equiv-all';
 
 		$this->links[] = array();
 	}

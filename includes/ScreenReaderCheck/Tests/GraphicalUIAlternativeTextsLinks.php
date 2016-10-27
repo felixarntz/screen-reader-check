@@ -31,7 +31,7 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 		$this->title            = __( 'Alternative texts for graphical UI elements: Links', 'screen-reader-check' );
 		$this->description      = __( 'Graphical UI elements must have alternative texts. Alternative texts for linked graphics should describe the link target.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.1.1 Non-text Content', 'screen-reader-check' );
-		$this->guideline_anchor = 'text-equiv';
+		$this->guideline_anchor = 'text-equiv-all';
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/H30',

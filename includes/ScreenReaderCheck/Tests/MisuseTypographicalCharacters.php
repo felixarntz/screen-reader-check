@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 1.0.0
  */
-class MiuseTypographicalCharacters extends Test {
+class MisuseTypographicalCharacters extends Test {
 	/**
 	 * Constructor.
 	 *

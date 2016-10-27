@@ -67,6 +67,9 @@ class Tests {
 			'StructuralHeadings',
 			'StructuralLists',
 			'StructuralQuotes',
+			'OrganizedContent',
+			'MisuseTypographicalCharacters',
+			'OrganizedSelectLists',
 		);
 
 		$index = 0;

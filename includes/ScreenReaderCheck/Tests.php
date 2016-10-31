@@ -71,6 +71,7 @@ class Tests {
 			'MisuseTypographicalCharacters',
 			'OrganizedSelectLists',
 			'TableMarkup',
+			'DynamicallyInsertedContent',
 		);
 
 		$index = 0;

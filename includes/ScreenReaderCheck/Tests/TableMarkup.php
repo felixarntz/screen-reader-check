@@ -124,11 +124,11 @@ class TableMarkup extends Test {
 						'options'       => array(
 							array(
 								'value'   => 'data',
-								'label'   => __( 'Yes', 'screen-reader-check' ),
+								'label'   => __( 'Data Table', 'screen-reader-check' ),
 							),
 							array(
 								'value'   => 'layout',
-								'label'   => __( 'No', 'screen-reader-check' ),
+								'label'   => __( 'Layout Table', 'screen-reader-check' ),
 							),
 						),
 						'default'       => 'data',

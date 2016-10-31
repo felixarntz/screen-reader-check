@@ -70,6 +70,7 @@ class Tests {
 			'OrganizedContent',
 			'MisuseTypographicalCharacters',
 			'OrganizedSelectLists',
+			'TableMarkup',
 		);
 
 		$index = 0;
@@ -200,6 +201,18 @@ class Tests {
 				'label'             => __( 'Icon Font Class', 'screen-reader-check' ),
 				'description'       => __( 'If you are using icon fonts on your site, please specify a list of CSS class prefixes denoting them, separated by space.', 'screen-reader-check' ),
 				'admin_description' => __( 'This is a list of CSS class prefixes for any icon fonts used in the HTML code.', 'screen-reader-check' ),
+				'default'           => '',
+			),
+			array(
+				'slug'              => 'layout_table_usage',
+				'type'              => 'select',
+				'label'             => __( 'Layout Table Usage', 'screen-reader-check' ),
+				'description'       => __( 'Please specify whether the page uses layout tables at all.', 'screen-reader-check' ),
+				'admin_description' => __( 'This value specifies whether the page uses layout tables at all.', 'screen-reader-check' ),
+				'options'           => array(
+					'yes'             => __( 'Yes', 'screen-reader-check' ),
+					'no'              => __( 'No', 'screen-reader-check' ),
+				),
 				'default'           => '',
 			),
 		);

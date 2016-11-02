@@ -77,6 +77,7 @@ class Tests {
 			'StructuredContentAreasHeadings',
 			'StructuredContentAreasFrames',
 			'HelpfulLinkTexts',
+			'MultipleWays',
 		);
 
 		$index = 0;

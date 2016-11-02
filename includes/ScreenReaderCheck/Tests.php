@@ -76,6 +76,7 @@ class Tests {
 			'TimingAdjustable',
 			'StructuredContentAreasHeadings',
 			'StructuredContentAreasFrames',
+			'HelpfulLinkTexts',
 		);
 
 		$index = 0;

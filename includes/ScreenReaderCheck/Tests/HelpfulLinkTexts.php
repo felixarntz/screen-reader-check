@@ -72,9 +72,14 @@ class HelpfulLinkTexts extends Test {
 				if ( $child->isTextNode() ) {
 					$linktext .= $child->text();
 				} else {
-					$alt = $child->getAttribute( 'alt' );
-					if ( $alt ) {
-						$linktext .= $alt;
+					$text_content = $child->text();
+					if ( $text_content ) {
+						$linktext .= $text_content;
+					} else {
+						$alt = $child->getAttribute( 'alt' );
+						if ( $alt ) {
+							$linktext .= $alt;
+						}
 					}
 				}
 			}

@@ -73,6 +73,7 @@ class Tests {
 			'TableMarkup',
 			'DynamicallyInsertedContent',
 			'KeyboardControlsTabindex',
+			'TimingAdjustable',
 		);
 
 		$index = 0;

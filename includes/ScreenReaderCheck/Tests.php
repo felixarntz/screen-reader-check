@@ -74,6 +74,8 @@ class Tests {
 			'DynamicallyInsertedContent',
 			'KeyboardControlsTabindex',
 			'TimingAdjustable',
+			'StructuredContentAreasHeadings',
+			'StructuredContentAreasFrames',
 		);
 
 		$index = 0;

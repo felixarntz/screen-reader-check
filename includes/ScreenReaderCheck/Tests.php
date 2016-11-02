@@ -72,6 +72,7 @@ class Tests {
 			'OrganizedSelectLists',
 			'TableMarkup',
 			'DynamicallyInsertedContent',
+			'KeyboardControlsTabindex',
 		);
 
 		$index = 0;

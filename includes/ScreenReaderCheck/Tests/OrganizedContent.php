@@ -82,6 +82,11 @@ class OrganizedContent extends Test {
 				continue;
 			}
 
+			// Skip if no content (probably an icon then).
+			if ( ! $italic->text() ) {
+				continue;
+			}
+
 			// Skip if using an iconfont class.
 			$iconfont_classes = $this->get_global_option( 'iconfont' );
 			if ( $iconfont_classes ) {

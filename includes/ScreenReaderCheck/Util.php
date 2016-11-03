@@ -71,7 +71,7 @@ class Util {
 			return '';
 		}
 
-		$title_tag = $dom->find( 'title', true );
+		$title_tag = $dom->find( 'title', false, true );
 		if ( ! $title_tag ) {
 			return '';
 		}

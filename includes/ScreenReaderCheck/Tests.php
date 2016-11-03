@@ -78,6 +78,7 @@ class Tests {
 			'StructuredContentAreasFrames',
 			'HelpfulLinkTexts',
 			'MultipleWays',
+			'DocumentLanguage',
 		);
 
 		$index = 0;

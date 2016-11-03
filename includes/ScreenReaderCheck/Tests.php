@@ -82,6 +82,7 @@ class Tests {
 			'FormControlLabels',
 			'ValidHTML',
 			'DeprecatedUsage',
+			'UIComponentsRoles',
 		);
 
 		$index = 0;

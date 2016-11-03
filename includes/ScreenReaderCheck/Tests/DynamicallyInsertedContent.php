@@ -203,7 +203,7 @@ class DynamicallyInsertedContent extends Test {
 	 */
 	protected function is_element_following( $button, $element_id ) {
 		$next = $button->getNext();
-		if ( $next ) {
+		if ( $next && ! $next->isTextNode() ) {
 			if ( $element_id === $next->getAttribute( 'id' ) ) {
 				return true;
 			}
@@ -216,7 +216,7 @@ class DynamicallyInsertedContent extends Test {
 			$parent = $button->getParent();
 			$next = $parent->getNext();
 
-			if ( $next ) {
+			if ( $next && ! $next->isTextNode() ) {
 				if ( $element_id === $next->getAttribute( 'id' ) ) {
 					return true;
 				}

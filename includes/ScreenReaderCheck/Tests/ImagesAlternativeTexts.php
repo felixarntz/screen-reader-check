@@ -153,7 +153,7 @@ class ImagesAlternativeTexts extends Test {
 						$has_errors = true;
 					} else {
 						$blacklist = array( 'spacer', 'placeholder', 'empty', 'leer' );
-						if ( in_array( trim( strtolower( $src ) ), $blacklist ) ) {
+						if ( in_array( trim( strtolower( $alt ) ), $blacklist ) ) {
 							$result['message_codes'][] = 'non_descriptive_alternative_text';
 							$result['messages'][] = $this->wrap_message( __( 'The following image uses a non-descriptive <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alternative texts should describe the image in clear human language, or be empty for decorative images.', 'screen-reader-check' ), $image->getLineNo() );
 							$has_errors = true;

@@ -193,6 +193,23 @@ class Tests {
 	}
 
 	/**
+	 * Returns the test for a given slug.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param string $test_slug The test slug.
+	 * @return ScreenReaderCheck\Test The test object.
+	 */
+	public function get_test( $test_slug ) {
+		if ( ! isset( $this->test_order[ $test_slug ] ) ) {
+			return false;
+		}
+
+		return $this->tests[ $this->test_order[ $test_slug ] ];
+	}
+
+	/**
 	 * Returns an array of global options that can optionally be entered on form submission.
 	 *
 	 * @since 1.0.0
@@ -239,23 +256,6 @@ class Tests {
 			case 'ajax_run_next_test':
 				return call_user_func_array( array( $this, $method ), $args );
 		}
-	}
-
-	/**
-	 * Returns the test for a given slug.
-	 *
-	 * @since 1.0.0
-	 * @access private
-	 *
-	 * @param string $test_slug The test slug.
-	 * @return ScreenReaderCheck\Test The test object.
-	 */
-	private function get_test( $test_slug ) {
-		if ( ! isset( $this->test_order[ $test_slug ] ) ) {
-			return false;
-		}
-
-		return $this->tests[ $this->test_order[ $test_slug ] ];
 	}
 
 	/**

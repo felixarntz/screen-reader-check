@@ -23,6 +23,16 @@ class Test_ImagesAlternativeTexts extends SRC_UnitTestCase_For_Test {
 					'success',
 				),
 			),
+			'valid_images_almost' => array(
+				'valid_images.html',
+				array(
+					'image_type_purely-decorative-image--png' => 'content',
+				),
+				array(),
+				array(
+					'empty_alt_attribute_content',
+				),
+			),
 			'invalid_images' => array(
 				'invalid_images.html',
 				array(

@@ -63,12 +63,13 @@ class Dom extends Node {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param string $selector The query selector.
-	 * @param bool   $single   Optional. Whether to only return a single result. Default false.
+	 * @param string $selector    The query selector.
+	 * @param bool   $includeText Optional. Whether to include text nodes. Default false.
+	 * @param bool   $single      Optional. Whether to only return a single result. Default false.
 	 * @return array|Node|null Array of results, or a single node (or null if nothing found) depending on $single.
 	 */
-	public function find( $selector, $single = false ) {
-		$nodes = $this->parseNodes( $this->domXPath->evaluate( $this->parseSelector( $selector ) ) );
+	public function find( $selector, $includeText = false, $single = false ) {
+		$nodes = $this->parseNodes( $this->domXPath->evaluate( $this->parseSelector( $selector ) ), $includeText );
 
 		if ( $single ) {
 			if ( ! isset( $nodes[0] ) ) {

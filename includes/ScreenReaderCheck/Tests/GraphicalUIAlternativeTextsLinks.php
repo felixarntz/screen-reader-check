@@ -55,6 +55,7 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 
 		if ( count( $images ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no graphical links in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -73,6 +74,7 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 			$found = true;
 
 			if ( ! $link->getAttribute( 'aria-label' ) && ! $image->getAttribute( 'alt' ) ) {
+				$result['message_codes'][] = 'missing_alternative_text';
 				$result['messages'][] = $this->wrap_message( __( 'The following graphical link is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $link->outerHtml() ), $link->getLineNo() );
 				$has_errors = true;
 			}
@@ -80,6 +82,7 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 
 		if ( ! $found ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no graphical links in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -88,6 +91,7 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All graphical links in the HTML code have valid alternative texts provided.', 'screen-reader-check' );
 		}
 

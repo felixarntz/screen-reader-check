@@ -52,6 +52,7 @@ class CaptchasAlternativeTexts extends Test {
 
 		if ( count( $images ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no CAPTCHAs in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -77,10 +78,12 @@ class CaptchasAlternativeTexts extends Test {
 
 			$alt = $image->getAttribute( 'alt' );
 			if ( ! $alt ) {
+				$result['message_codes'][] = 'missing_alternative_text';
 				$result['messages'][] = $this->wrap_message( __( 'The following CAPTCHA is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 				$has_errors = true;
 			} else {
 				if ( strtolower( $alt ) === 'captcha' ) {
+					$result['message_codes'][] = 'non_descriptive_alternative_text';
 					$result['messages'][] = $this->wrap_message( __( 'The following CAPTCHA does not have a helpful alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 					$has_errors = true;
 				}
@@ -89,6 +92,7 @@ class CaptchasAlternativeTexts extends Test {
 
 		if ( ! $found ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no CAPTCHAs in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -97,6 +101,7 @@ class CaptchasAlternativeTexts extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All CAPTCHAs in the HTML code have valid <code>alt</code> attributes provided.', 'screen-reader-check' );
 		}
 

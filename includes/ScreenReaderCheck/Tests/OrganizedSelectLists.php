@@ -55,6 +55,7 @@ class OrganizedSelectLists extends Test {
 
 		if ( count( $selects ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no select lists in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -69,6 +70,7 @@ class OrganizedSelectLists extends Test {
 				foreach ( $options as $option ) {
 					$text = trim( $option->text() );
 					if ( preg_match( '/^(&nbsp;|&rarr;|&gt;|\-|_)/', $text ) ) {
+						$result['message_codes'][] = 'misuse_of_characters_for_option_indent';
 						$result['messages'][] = $this->wrap_message( __( 'The following select list uses typographic characters to indicate groups:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $select->outerHtml() ), $select->getLineNo() );
 						$has_errors = true;
 						break;
@@ -81,6 +83,7 @@ class OrganizedSelectLists extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All select lists in the HTML code use valid markup.', 'screen-reader-check' );
 		}
 

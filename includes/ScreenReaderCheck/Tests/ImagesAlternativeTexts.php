@@ -63,6 +63,7 @@ class ImagesAlternativeTexts extends Test {
 
 		if ( count( $images ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no images in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -98,6 +99,7 @@ class ImagesAlternativeTexts extends Test {
 
 			$alt = $image->getAttribute( 'alt' );
 			if ( null === $alt ) {
+				$result['message_codes'][] = 'missing_alt_attribute';
 				$result['messages'][] = $this->wrap_message( __( 'The following image is missing an <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 				$has_errors = true;
 			} elseif ( empty( $alt ) ) {
@@ -108,11 +110,13 @@ class ImagesAlternativeTexts extends Test {
 					$image_type = $this->get_option( 'image_type_' . $sanitized_src );
 					if ( $image_type ) {
 						if ( 'content' === $image_type ) {
+							$result['message_codes'][] = 'empty_alt_attribute_content';
 							$result['messages'][] = $this->wrap_message( __( 'The following image has an empty <code>alt</code> attribute although it is informative:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'An empty <code>alt</code> attribute is only acceptable for non-informative images.', 'screen-reader-check' ), $image->getLineNo() );
 							$has_errors = true;
 						} else {
 							$title = $image->getAttribute( 'title' );
 							if ( $title ) {
+								$result['message_codes'][] = 'usage_of_title_attribute_layout';
 								$result['messages'][] = $this->wrap_message( __( 'The following non-informative image uses the <code>title</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 								$has_warnings = true;
 							}
@@ -144,15 +148,18 @@ class ImagesAlternativeTexts extends Test {
 				$src = $image->getAttribute( 'src' );
 				if ( is_string( $src ) ) {
 					if ( false !== strpos( $src, $alt ) ) {
+						$result['message_codes'][] = 'alt_attribute_part_of_src';
 						$result['messages'][] = $this->wrap_message( __( 'The following image seems to have an auto-generated <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alternative texts should describe the image in clear human language.', 'screen-reader-check' ), $image->getLineNo() );
 						$has_errors = true;
 					} else {
 						$blacklist = array( 'spacer', 'placeholder', 'empty', 'leer' );
 						if ( in_array( trim( strtolower( $src ) ), $blacklist ) ) {
+							$result['message_codes'][] = 'non_descriptive_alternative_text';
 							$result['messages'][] = $this->wrap_message( __( 'The following image uses a non-descriptive <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alternative texts should describe the image in clear human language, or be empty for decorative images.', 'screen-reader-check' ), $image->getLineNo() );
 							$has_errors = true;
 						} else {
 							if ( 80 < strlen( $alt ) ) {
+								$result['message_codes'][] = 'alternative_text_too_long';
 								$result['messages'][] = $this->wrap_message( __( 'The following image uses a very long <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'If a longer description is necessary for the image, the <code>longdesc</code> attribute should be used.', 'screen-reader-check' ), $image->getLineNo() );
 								$has_errors = true;
 							}
@@ -164,6 +171,7 @@ class ImagesAlternativeTexts extends Test {
 
 		if ( ! $found ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no images in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -172,6 +180,7 @@ class ImagesAlternativeTexts extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All images in the HTML code have valid <code>alt</code> attributes provided.', 'screen-reader-check' );
 		}
 

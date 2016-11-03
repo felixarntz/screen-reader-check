@@ -63,6 +63,7 @@ class DynamicallyInsertedContent extends Test {
 
 		if ( count( $buttons ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'No dynamic content was detected in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -109,6 +110,7 @@ class DynamicallyInsertedContent extends Test {
 			foreach ( $element_ids as $element_id ) {
 				$element = $dom->find( '#' . $element_id, false, true );
 				if ( ! $element ) {
+					$result['message_codes'][] = 'dynamic_element_not_exist';
 					$result['messages'][] = $this->wrap_message( sprintf( __( 'The element with the ID %s does not exist although it is controlled by the following button:', 'screen-reader-check' ), $element_id ) . '<br>' . $this->wrap_code( $button->outerHtml() ), $button->getLineNo() );
 					$has_errors = true;
 				} else {
@@ -118,6 +120,7 @@ class DynamicallyInsertedContent extends Test {
 						$valid_focus_change = $this->get_option( 'valid_focus_change_' . $identifier . '_for_id_' . $element_id );
 						if ( $valid_focus_change ) {
 							if ( 'no' === $valid_focus_change ) {
+								$result['message_codes'][] = 'dynamic_element_focus_not_adjusted';
 								$result['messages'][] = $this->wrap_message( sprintf( __( 'The focus for the element with ID %s is not adjusted accordingly when it is toggled by the following button:', 'screen-reader-check' ), $element_id ) . '<br>' . $this->wrap_code( $button->outerHtml() ), $button->getLineNo() );
 								$has_errors = true;
 							}
@@ -147,6 +150,7 @@ class DynamicallyInsertedContent extends Test {
 
 		if ( ! $found ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'No dynamic content was detected in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -155,6 +159,7 @@ class DynamicallyInsertedContent extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All detected dynamic content is added properly.', 'screen-reader-check' );
 		}
 

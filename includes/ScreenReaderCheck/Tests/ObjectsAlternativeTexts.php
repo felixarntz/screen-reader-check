@@ -55,6 +55,7 @@ class ObjectsAlternativeTexts extends Test {
 
 		if ( count( $objects ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no objects in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -64,6 +65,7 @@ class ObjectsAlternativeTexts extends Test {
 
 		foreach ( $objects as $object ) {
 			if ( ! $object->hasChildren( true ) ) {
+				$result['message_codes'][] = 'missing_alternative_content';
 				$result['messages'][] = $this->wrap_message( __( 'The following object does not have any alternative content:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $object->outerHtml() ), $object->getLineNo() );
 				$has_errors = true;
 			} else {
@@ -73,15 +75,18 @@ class ObjectsAlternativeTexts extends Test {
 					if ( 'img' === $alternative->getTagName() ) {
 						$alt = $alternative->getAttribute( 'alt' );
 						if ( ! $alt ) {
+							$result['message_codes'][] = 'missing_alt_attribute_in_alternative_content';
 							$result['messages'][] = $this->wrap_message( __( 'The following object uses an image as alternative content which however does not provide an alternative text itself:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $object->outerHtml() ), $object->getLineNo() );
 							$has_errors = true;
 						} else {
 							$src = $alternative->getAttribute( 'src' );
 							if ( is_string( $src ) ) {
 								if ( false !== strpos( $src, $alt ) ) {
+									$result['message_codes'][] = 'alt_attribute_part_of_src_in_alternative_content';
 									$result['messages'][] = $this->wrap_message( __( 'The following object uses an image as alternative which itself seems to have an auto-generated <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $object->outerHtml() ), $object->getLineNo() );
 									$has_errors = true;
 								} elseif ( 80 < strlen( $src ) ) {
+									$result['message_codes'][] = 'alt_attribute_too_long_in_alternative_content';
 									$result['messages'][] = $this->wrap_message( __( 'The following object uses an image as alternative which itself uses a very long <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $object->outerHtml() ), $object->getLineNo() );
 									$has_errors = true;
 								}
@@ -96,6 +101,7 @@ class ObjectsAlternativeTexts extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All objects in the HTML code have valid alternatives provided.', 'screen-reader-check' );
 		}
 

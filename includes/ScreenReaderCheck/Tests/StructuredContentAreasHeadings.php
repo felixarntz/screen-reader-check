@@ -59,6 +59,7 @@ class StructuredContentAreasHeadings extends Test {
 
 		if ( count( $sectioning_contents ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no sectioning content tags in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -73,6 +74,7 @@ class StructuredContentAreasHeadings extends Test {
 			if ( ! $heading ) {
 				$id = $sectioning_content->getAttribute( 'id' );
 				if ( ! $id ) {
+					$result['message_codes'][] = 'missing_heading_or_skip_link';
 					$result['messages'][] = sprintf( __( 'The %1$s in line %2$s has neither a heading nor a skip link leading to it.', 'screen-reader-check' ), $sectioning_content->getTagName(), $sectioning_content->getLineNo() );
 					$has_errors = true;
 				} else {
@@ -85,6 +87,7 @@ class StructuredContentAreasHeadings extends Test {
 						}
 					}
 					if ( ! $found_skip_link ) {
+						$result['message_codes'][] = 'missing_heading_or_skip_link';
 						$result['messages'][] = sprintf( __( 'The %1$s in line %2$s has neither a heading nor a skip link leading to it.', 'screen-reader-check' ), $sectioning_content->getTagName(), $sectioning_content->getLineNo() );
 						$has_errors = true;
 					}
@@ -96,6 +99,7 @@ class StructuredContentAreasHeadings extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All sectioning content tags in the HTML code have valid headings or skip links provided.', 'screen-reader-check' );
 		}
 

@@ -55,6 +55,7 @@ class BaseTest extends Test {
 
 		if ( count( $images ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no images in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -65,6 +66,7 @@ class BaseTest extends Test {
 		foreach ( $images as $image ) {
 			$alt = $image->getAttribute( 'alt' );
 			if ( null === $alt ) {
+				$result['message_codes'][] = 'missing_alt_attribute';
 				$result['messages'][] = $this->wrap_message( __( 'The following image is missing an <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 				$has_errors = true;
 			} elseif ( empty( $alt ) ) {
@@ -72,6 +74,7 @@ class BaseTest extends Test {
 				$image_type = $this->get_option( 'image_type_' . $this->sanitize_src( $src ) );
 				if ( $image_type ) {
 					if ( 'content' === $image_type ) {
+						$result['message_codes'][] = 'empty_alt_attribute_content';
 						$result['messages'][] = $this->wrap_message( __( 'The following image has an empty <code>alt</code> attribute although it is part of the content:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'An empty alt attribute is only acceptable for decorative images.', 'screen-reader-check' ), $image->getLineNo() );
 						$has_errors = true;
 					}
@@ -97,6 +100,7 @@ class BaseTest extends Test {
 			} else {
 				$src = $image->getAttribute( 'src' );
 				if ( is_string( $src ) && false !== strpos( $src, $alt ) ) {
+					$result['message_codes'][] = 'alt_attribute_part_of_src';
 					$result['messages'][] = $this->wrap_message( __( 'The following image seems to have an auto-generated <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ) . '<br>' . __( 'Alt attributes should describe the image in clear human language.', 'screen-reader-check' ), $image->getLineNo() );
 					$has_errors = true;
 				}
@@ -107,6 +111,7 @@ class BaseTest extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All images in the HTML code have valid <code>alt</code> attributes provided.', 'screen-reader-check' );
 		}
 

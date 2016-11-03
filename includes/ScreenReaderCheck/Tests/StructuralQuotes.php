@@ -60,10 +60,12 @@ class StructuralQuotes extends Test {
 			$has_blockquotes = $this->get_option( 'has_blockquotes' );
 			if ( $has_blockquotes ) {
 				if ( 'yes' === $has_blockquotes ) {
+					$result['message_codes'][] = 'missing_blockquote_markup_for_quotes';
 					$result['messages'][] = __( 'The page contains blockquotes that do not use proper blockquote markup.', 'screen-reader-check' );
 					$has_errors = true;
 				} else {
 					$result['type'] = 'info';
+					$result['message_codes'][] = 'skipped';
 					$result['messages'][] = __( 'There are no blockquotes in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 					return $result;
 				}
@@ -92,6 +94,7 @@ class StructuralQuotes extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All quotes in the HTML code use proper blockquote markup.', 'screen-reader-check' );
 		}
 

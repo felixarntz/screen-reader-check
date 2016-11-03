@@ -59,6 +59,7 @@ class VideoAlternatives extends Test {
 
 		if ( count( $videos ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no video files in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -115,9 +116,11 @@ class VideoAlternatives extends Test {
 							$has_alternative_audio_or_text = $this->get_option( 'video_alternative_audio_or_text_' . $sanitized_src );
 							if ( $has_alternative_audio_or_text ) {
 								if ( 'yes' === $has_alternative_audio_or_text ) {
+									$result['message_codes'][] = 'alternative_content_outside_of_body';
 									$result['messages'][] = $this->wrap_message( __( 'The alternative content for the following silent video should be located in the element body:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $video->outerHtml() ), $video->getLineNo() );
 									$has_warnings = true;
 								} else {
+									$result['message_codes'][] = 'missing_alternative_content';
 									$result['messages'][] = $this->wrap_message( __( 'The following silent video is missing an audio or text alternative:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $video->outerHtml() ), $video->getLineNo() );
 									$has_errors = true;
 								}
@@ -146,6 +149,7 @@ class VideoAlternatives extends Test {
 							$has_audio_description = $this->get_option( 'video_alternative_audio_description_' . $sanitized_src );
 							if ( $has_audio_description ) {
 								if ( 'yes' !== $has_audio_description ) {
+									$result['message_codes'][] = 'missing_audio_description';
 									$result['messages'][] = $this->wrap_message( __( 'The following video is missing an audio description:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $video->outerHtml() ), $video->getLineNo() );
 									$has_errors = true;
 								}
@@ -197,6 +201,7 @@ class VideoAlternatives extends Test {
 
 		if ( ! $found ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no video files in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -205,6 +210,7 @@ class VideoAlternatives extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All videos in the HTML code have valid alternative content provided.', 'screen-reader-check' );
 		}
 

@@ -55,6 +55,7 @@ class GraphicalUIAlternativeTextsButtons extends Test {
 
 		if ( count( $image_buttons ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no graphical buttons in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -66,11 +67,13 @@ class GraphicalUIAlternativeTextsButtons extends Test {
 			$alt = $image_button->getAttribute( 'alt' );
 
 			if ( ! $alt ) {
+				$result['message_codes'][] = 'missing_alternative_text';
 				$result['messages'][] = $this->wrap_message( __( 'The following graphical button is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 				$has_errors = true;
 			} else {
 				$src = $image_button->getAttribute( 'src' );
 				if ( is_string( $src ) && false !== strpos( $src, $alt ) ) {
+					$result['message_codes'][] = 'alt_attribute_part_of_src';
 					$result['messages'][] = $this->wrap_message( __( 'The following graphical button seems to have an auto-generated <code>alt</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image_button->outerHtml() ) . '<br>' . __( 'Alt attributes should describe the image in clear human language.', 'screen-reader-check' ), $image_button->getLineNo() );
 					$has_errors = true;
 				}
@@ -81,6 +84,7 @@ class GraphicalUIAlternativeTextsButtons extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All graphical buttons in the HTML code have valid alternative texts provided.', 'screen-reader-check' );
 		}
 

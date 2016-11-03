@@ -50,6 +50,7 @@ class KeyboardControlsTabindex extends Test {
 
 		if ( count( $tabindexes ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no tags with <code>tabindex</code> attributes in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -60,10 +61,12 @@ class KeyboardControlsTabindex extends Test {
 		foreach ( $tabindexes as $tabindex ) {
 			$value = (int) $tabindex->getAttribute( 'tabindex' );
 			if ( $value > 0 ) {
+				$result['message_codes'][] = 'tabindex_greater_than_0';
 				$result['messages'][] = $this->wrap_message( __( 'The <code>tabindex</code> attribute of the following element is greater than 0:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $tabindex->outerHtml() ), $tabindex->getLineNo() );
 				$has_errors = true;
 			} else {
 				if ( $value === -1 ) {
+					$result['message_codes'][] = 'tabindex_minus_1';
 					$result['messages'][] = $this->wrap_message( __( 'The <code>tabindex</code> attribute of the following element is set to -1, thus can only reached via JavaScript:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $tabindex->outerHtml() ), $tabindex->getLineNo() );
 					$has_warnings = true;
 				}
@@ -74,6 +77,7 @@ class KeyboardControlsTabindex extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All tags with <code>tabindex</code> attributes in the HTML code use non-problematic values.', 'screen-reader-check' );
 		}
 

@@ -55,6 +55,7 @@ class GraphicalUIAlternativeTextsImageMaps extends Test {
 
 		if ( count( $areas ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no image maps in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -66,6 +67,7 @@ class GraphicalUIAlternativeTextsImageMaps extends Test {
 			$alt = $area->getAttribute( 'alt' );
 
 			if ( ! $alt ) {
+				$result['message_codes'][] = 'missing_alternative_text';
 				$result['messages'][] = $this->wrap_message( __( 'The following <code>area</code> tag of an image map is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 				$has_errors = true;
 			}
@@ -75,6 +77,7 @@ class GraphicalUIAlternativeTextsImageMaps extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All image maps in the HTML code have valid alternative texts provided.', 'screen-reader-check' );
 		}
 

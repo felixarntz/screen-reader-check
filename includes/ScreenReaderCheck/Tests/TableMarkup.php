@@ -76,10 +76,12 @@ class TableMarkup extends Test {
 			$has_table_data = $this->get_option( 'has_table_data' );
 			if ( $has_table_data ) {
 				if ( 'yes' === $has_table_data ) {
+					$result['message_codes'][] = 'missing_table_markup_for_tabular_data';
 					$result['messages'][] = __( 'The page contains tabular data that do not use proper table markup.', 'screen-reader-check' );
 					$has_errors = true;
 				} else {
 					$result['type'] = 'info';
+					$result['message_codes'][] = 'skipped';
 					$result['messages'][] = __( 'There are no tables in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 					return $result;
 				}
@@ -147,12 +149,14 @@ class TableMarkup extends Test {
 					$table_headings = $this->get_option( 'table_headings_' . $identifier );
 					if ( $table_headings ) {
 						if ( in_array( $table_headings, array( 'columns', 'columnsrows' ), true ) ) {
+							$result['message_codes'][] = 'missing_column_heading_markup';
 							$result['messages'][] = sprintf( __( 'The data table in line %s is missing valid markup for its column headings.', 'screen-reader-check' ), $table->getLineNo() );
 							$has_errors = true;
 						}
 						if ( in_array( $table_headings, array( 'rows', 'columnsrows' ), true ) ) {
 							$tds_with_rowscope = $table->find( 'td[scope="row"]' );
 							if ( count( $tds_with_rowscope ) === 0 ) {
+								$result['message_codes'][] = 'missing_row_heading_markup';
 								$result['messages'][] = sprintf( __( 'The data table in line %s is missing valid markup for its row headings.', 'screen-reader-check' ), $table->getLineNo() );
 								$has_errors = true;
 							}
@@ -186,6 +190,7 @@ class TableMarkup extends Test {
 					}
 				} else {
 					if ( ! $table->find( 'thead', false, true ) && $table->find( 'tr:first-child > th', false, true ) ) {
+						$result['message_codes'][] = 'missing_thead_tag';
 						$result['messages'][] = sprintf( __( 'The data table in line %s should use <code>thead</code> to wrap its column headings.', 'screen-reader-check' ), $table->getLineNo() );
 						$has_errors = true;
 					}
@@ -210,6 +215,7 @@ class TableMarkup extends Test {
 							}
 						}
 						if ( $th_row_count > 1 ) {
+							$result['message_codes'][] = 'missing_headers_and_id_attributes_complex';
 							$result['messages'][] = sprintf( __( 'The data table in line %s should use <code>headers</code> and <code>id</code> attributes to mark complex relationships between its cells.', 'screen-reader-check' ), $table->getLineNo() );
 							$has_errors = true;
 						}
@@ -217,6 +223,7 @@ class TableMarkup extends Test {
 				}
 
 				if ( ! $table->find( 'tbody', false, true ) ) {
+					$result['message_codes'][] = 'missing_tbody_tag';
 					$result['messages'][] = sprintf( __( 'The data table in line %s is missing a <code>tbody</code> element.', 'screen-reader-check' ), $table->getLineNo() );
 					$has_errors = true;
 				}
@@ -225,6 +232,7 @@ class TableMarkup extends Test {
 				if ( $caption ) {
 					$summary = $table->getAttribute( 'summary' );
 					if ( $summary && $summary === $caption ) {
+						$result['message_codes'][] = 'summary_equals_caption';
 						$result['messages'][] = sprintf( __( 'The <code>summary</code> attribute of the data table in line %s has a similar value like its <code>caption</code> element.', 'screen-reader-check' ), $table->getLineNo() );
 						$has_errors = true;
 					}
@@ -233,6 +241,7 @@ class TableMarkup extends Test {
 				$forbidden_elements = $table->find( 'caption,th,td[headers]' );
 				$summary = $table->getAttribute( 'summary' );
 				if ( count( $forbidden_elements ) > 0 || $summary ) {
+					$result['message_codes'][] = 'misuse_of_structural_markup_layout';
 					$result['messages'][] = sprintf( __( 'The layout table in line %s uses structural markup which is only allowed for data tables.', 'screen-reader-check' ), $table->getLineNo() );
 					$has_errors = true;
 				}
@@ -243,6 +252,7 @@ class TableMarkup extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All tables in the HTML code use valid table markup.', 'screen-reader-check' );
 		}
 

@@ -55,6 +55,7 @@ class StructuredContentAreasFrames extends Test {
 
 		if ( count( $frames ) === 0 ) {
 			$result['type'] = 'info';
+			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no frames in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
 		}
@@ -68,6 +69,7 @@ class StructuredContentAreasFrames extends Test {
 			$title = $frame->getAttribute( 'title' );
 
 			if ( null === $title ) {
+				$result['message_codes'][] = 'missing_title_attribute';
 				$result['messages'][] = $this->wrap_message( __( 'The following frame is missing a <code>title</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $frame->outerHtml() ), $frame->getLineNo() );
 				$has_errors = true;
 			} elseif ( empty( $title ) ) {
@@ -78,6 +80,7 @@ class StructuredContentAreasFrames extends Test {
 					$frame_type = $this->get_option( 'frame_type_' . $sanitized_src );
 					if ( $frame_type ) {
 						if ( 'content' === $frame_type ) {
+							$result['message_codes'][] = 'empty_title_attribute_content';
 							$result['messages'][] = $this->wrap_message( __( 'The following frame has an empty <code>title</code> attribute although it provides actual content:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $frame->outerHtml() ) . '<br>' . __( 'An empty <code>title</code> attribute is only acceptable for layout frames.', 'screen-reader-check' ), $frame->getLineNo() );
 							$has_errors = true;
 						}
@@ -108,10 +111,12 @@ class StructuredContentAreasFrames extends Test {
 				$src = $frame->getAttribute( 'src' );
 				if ( is_string( $src ) ) {
 					if ( false !== strpos( $src, $title ) ) {
+						$result['message_codes'][] = 'title_attribute_part_of_src';
 						$result['messages'][] = $this->wrap_message( __( 'The following frame seems to have an auto-generated <code>title</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $frame->outerHtml() ) . '<br>' . __( 'The title should describe the frame in clear human language.', 'screen-reader-check' ), $frame->getLineNo() );
 						$has_errors = true;
 					} else {
 						if ( preg_match( '/(top|right|bottom|left|outer|inner)/i', $src ) ) {
+							$result['message_codes'][] = 'title_attribute_contains_position';
 							$result['messages'][] = $this->wrap_message( __( 'The following frame uses the <code>title</code> attribute to describe the position of the frame:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $frame->outerHtml() ), $frame->getLineNo() );
 							$has_errors = true;
 						}
@@ -124,6 +129,7 @@ class StructuredContentAreasFrames extends Test {
 			$result['type'] = 'warning';
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
+			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'All frames in the HTML code have valid <code>title</code> attributes provided.', 'screen-reader-check' );
 		}
 

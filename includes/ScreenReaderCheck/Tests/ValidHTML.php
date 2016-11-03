@@ -102,7 +102,7 @@ class ValidHTML extends Test {
 		} elseif ( ! $has_errors && ! $has_warnings ) {
 			$result['type'] = 'success';
 			$result['message_codes'][] = 'success';
-			$result['messages'][] = __( 'All images in the HTML code have valid <code>alt</code> attributes provided.', 'screen-reader-check' );
+			$result['messages'][] = __( 'No invalid usage of HTML code was detected.', 'screen-reader-check' );
 		}
 
 		return $result;

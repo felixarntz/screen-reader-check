@@ -90,7 +90,27 @@ class Dom extends Node {
 	 * @return string The document type.
 	 */
 	public function getDocumentType() {
-		return $this->domNode->doctype->name;
+		if ( 'html' === strtolower( $this->domNode->doctype->name ) ) {
+			$id = $this->domNode->doctype->systemId;
+
+			$standards = array(
+				'xhtml11',
+				'xhtml1',
+				'xhtml',
+				'html4',
+				'html3',
+			);
+
+			foreach ( $standards as $standard ) {
+				if ( false !== stripos( $id, $standard ) ) {
+					return $standard;
+				}
+			}
+
+			return 'html5';
+		}
+
+		return 'unknown';
 	}
 
 	/**

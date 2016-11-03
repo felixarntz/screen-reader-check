@@ -80,6 +80,7 @@ class Tests {
 			'MultipleWays',
 			'DocumentLanguage',
 			'FormControlLabels',
+			'ValidHTML',
 		);
 
 		$index = 0;

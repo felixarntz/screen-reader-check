@@ -81,6 +81,7 @@ class Tests {
 			'DocumentLanguage',
 			'FormControlLabels',
 			'ValidHTML',
+			'DeprecatedUsage',
 		);
 
 		$index = 0;

@@ -337,6 +337,7 @@ class Tests {
 					'check_id'              => $check_id,
 					'type'                  => 'success',
 					'messages'              => array( __( 'All tests completed.', 'screen-reader-check' ) ),
+					'message_codes'         => array( 'success' ),
 					'request_data'          => array(),
 					'check_complete'        => true,
 				);

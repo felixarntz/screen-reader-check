@@ -98,6 +98,15 @@ class TestResult {
 	private $messages = array();
 
 	/**
+	 * Array of message codes for this result.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $message_codes = array();
+
+	/**
 	 * Array of additional request data.
 	 *
 	 * @since 1.0.0
@@ -229,6 +238,18 @@ class TestResult {
 	 */
 	public function get_messages() {
 		return $this->messages;
+	}
+
+	/**
+	 * Returns all message codes for this result.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return array The message codes.
+	 */
+	public function get_message_codes() {
+		return $this->message_codes;
 	}
 
 	/**

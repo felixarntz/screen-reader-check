@@ -121,14 +121,16 @@ abstract class Test {
 		}
 
 		$result = $this->run( array(
-			'type' => 'error',
-			'messages' => array(),
-			'request_data' => array(),
+			'type'          => 'error',
+			'messages'      => array(),
+			'message_codes' => array(),
+			'request_data'  => array(),
 		), $dom );
 
 		if ( ! empty( $result['request_data'] ) ) {
-			$result['type'] = 'info';
-			$result['messages'] = array();
+			$result['type']          = 'info';
+			$result['messages']      = array();
+			$result['message_codes'] = array();
 		}
 
 		$result['test_slug']             = $this->slug;

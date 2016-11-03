@@ -79,6 +79,7 @@ class Tests {
 			'HelpfulLinkTexts',
 			'MultipleWays',
 			'DocumentLanguage',
+			'FormControlLabels',
 		);
 
 		$index = 0;

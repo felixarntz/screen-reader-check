@@ -150,7 +150,7 @@ class ValidHTML extends Test {
 			return $response;
 		}
 
-		$response = json_decode( wp_remote_retrieve_body( $response ) );
+		$response = json_decode( wp_remote_retrieve_body( $response ), true );
 		if ( ! isset( $response['messages'] ) ) {
 			return new WP_Error( 'invalid_response', __( 'Invalid response.', 'screen-reader-check' ) );
 		}

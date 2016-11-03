@@ -88,7 +88,7 @@ class DeprecatedUsage extends Test {
 			}
 		}
 
-		if ( empty( $result ) ) {
+		if ( empty( $result['message_codes'] ) ) {
 			$result['type'] = 'success';
 			$result['message_codes'][] = 'success';
 			$result['messages'][] = __( 'No usage of deprecated tags or attributes was found.', 'screen-reader-check' );

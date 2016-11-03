@@ -61,7 +61,7 @@ class OrganizedContent extends Test {
 		$double_breaks = $dom->find( 'br' );
 		foreach ( $double_breaks as $last_break ) {
 			$first_break = $last_break->getPrevious();
-			if ( 'br' !== $first_break->getTagName() ) {
+			if ( $first_break->isTextNode() || 'br' !== $first_break->getTagName() ) {
 				continue;
 			}
 

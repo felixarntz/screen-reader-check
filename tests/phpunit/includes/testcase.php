@@ -40,4 +40,8 @@ class SRC_UnitTestCase extends WP_UnitTestCase {
 	function assertTest( $actual, $message = '' ) {
 		$this->assertInstanceOf( 'ScreenReaderCheck\Test', $actual, $message );
 	}
+
+	function assertTestResult( $actual, $message = '' ) {
+		$this->assertInstanceOf( 'ScreenReaderCheck\TestResult', $actual, $message );
+	}
 }

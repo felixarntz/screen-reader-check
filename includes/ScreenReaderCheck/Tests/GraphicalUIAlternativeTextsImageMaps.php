@@ -68,7 +68,7 @@ class GraphicalUIAlternativeTextsImageMaps extends Test {
 
 			if ( ! $alt ) {
 				$result['message_codes'][] = 'missing_alternative_text';
-				$result['messages'][] = $this->wrap_message( __( 'The following <code>area</code> tag of an image map is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
+				$result['messages'][] = $this->wrap_message( __( 'The following <code>area</code> tag of an image map is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $area->outerHtml() ), $area->getLineNo() );
 				$has_errors = true;
 			}
 		}

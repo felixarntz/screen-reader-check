@@ -51,7 +51,7 @@ class CaptchaAlternatives extends Test {
 		$images = $dom->find( 'img' );
 
 		if ( count( $images ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no CAPTCHAs in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
@@ -119,7 +119,7 @@ class CaptchaAlternatives extends Test {
 		}
 
 		if ( ! $found ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no CAPTCHAs in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

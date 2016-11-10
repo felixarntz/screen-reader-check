@@ -54,7 +54,7 @@ class GraphicalUIAlternativeTextsButtons extends Test {
 		$image_buttons = $dom->find( 'input[type="image"]' );
 
 		if ( count( $image_buttons ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no graphical buttons in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

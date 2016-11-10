@@ -54,7 +54,7 @@ class OrganizedSelectLists extends Test {
 		$selects = $dom->find( 'select' );
 
 		if ( count( $selects ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no select lists in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

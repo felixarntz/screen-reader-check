@@ -54,7 +54,7 @@ class HelpfulLinkTexts extends Test {
 		$links = $dom->find( 'a' );
 
 		if ( count( $links ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no links in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

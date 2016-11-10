@@ -66,7 +66,7 @@ class FormControlLabels extends Test {
 		$form_controls = $dom->find( 'select,input' );
 
 		if ( count( $form_controls ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no form controls in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
@@ -110,7 +110,7 @@ class FormControlLabels extends Test {
 		}
 
 		if ( ! $found ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no form controls in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

@@ -62,7 +62,7 @@ class DynamicallyInsertedContent extends Test {
 		$buttons = $dom->find( 'button' );
 
 		if ( count( $buttons ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'No dynamic content was detected in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
@@ -149,7 +149,7 @@ class DynamicallyInsertedContent extends Test {
 		}
 
 		if ( ! $found ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'No dynamic content was detected in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

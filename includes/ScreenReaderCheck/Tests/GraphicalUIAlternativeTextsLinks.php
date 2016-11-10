@@ -54,7 +54,7 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 		$images = $dom->find( 'a > img' );
 
 		if ( count( $images ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no graphical links in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;
@@ -81,7 +81,7 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 		}
 
 		if ( ! $found ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no graphical links in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

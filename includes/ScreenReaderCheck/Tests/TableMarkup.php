@@ -80,7 +80,7 @@ class TableMarkup extends Test {
 					$result['messages'][] = __( 'The page contains tabular data that do not use proper table markup.', 'screen-reader-check' );
 					$has_errors = true;
 				} else {
-					$result['type'] = 'info';
+					$result['type'] = 'skipped';
 					$result['message_codes'][] = 'skipped';
 					$result['messages'][] = __( 'There are no tables in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 					return $result;

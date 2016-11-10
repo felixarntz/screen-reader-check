@@ -54,7 +54,7 @@ class GraphicalUIAlternativeTextsImageMaps extends Test {
 		$areas = $dom->find( 'map area' );
 
 		if ( count( $areas ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no image maps in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

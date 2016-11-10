@@ -54,7 +54,7 @@ class StructuredContentAreasFrames extends Test {
 		$frames = $dom->find( 'frame,iframe' );
 
 		if ( count( $frames ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no frames in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

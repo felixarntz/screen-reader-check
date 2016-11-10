@@ -49,7 +49,7 @@ class KeyboardControlsTabindex extends Test {
 		$tabindexes = $dom->find( '[tabindex]' );
 
 		if ( count( $tabindexes ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no tags with <code>tabindex</code> attributes in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

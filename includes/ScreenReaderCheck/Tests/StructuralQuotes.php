@@ -64,7 +64,7 @@ class StructuralQuotes extends Test {
 					$result['messages'][] = __( 'The page contains blockquotes that do not use proper blockquote markup.', 'screen-reader-check' );
 					$has_errors = true;
 				} else {
-					$result['type'] = 'info';
+					$result['type'] = 'skipped';
 					$result['message_codes'][] = 'skipped';
 					$result['messages'][] = __( 'There are no blockquotes in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 					return $result;

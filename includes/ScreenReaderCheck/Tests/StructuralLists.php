@@ -65,7 +65,7 @@ class StructuralLists extends Test {
 					$result['messages'][] = __( 'The page contains lists that do not use proper list markup.', 'screen-reader-check' );
 					$has_errors = true;
 				} elseif ( count( $navs ) === 0 ) {
-					$result['type'] = 'info';
+					$result['type'] = 'skipped';
 					$result['message_codes'][] = 'skipped';
 					$result['messages'][] = __( 'There are no lists in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 					return $result;

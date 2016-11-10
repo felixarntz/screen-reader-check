@@ -54,7 +54,7 @@ class UIComponentsRoles extends Test {
 		$unsemantic_links = $dom->find( 'a[href="#"]' );
 
 		if ( count( $unsemantic_links ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no non-semantically used <code>a</code> tags in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

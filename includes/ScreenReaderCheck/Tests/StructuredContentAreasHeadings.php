@@ -58,7 +58,7 @@ class StructuredContentAreasHeadings extends Test {
 		$sectioning_contents = $dom->find( 'section,article,nav,aside,main' );
 
 		if ( count( $sectioning_contents ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no sectioning content tags in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

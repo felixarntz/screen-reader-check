@@ -54,7 +54,7 @@ class ObjectsAlternativeTexts extends Test {
 		$objects = $dom->find( 'object,embed' );
 
 		if ( count( $objects ) === 0 ) {
-			$result['type'] = 'info';
+			$result['type'] = 'skipped';
 			$result['message_codes'][] = 'skipped';
 			$result['messages'][] = __( 'There are no objects in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
 			return $result;

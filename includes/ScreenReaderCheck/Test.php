@@ -329,7 +329,7 @@ abstract class Test {
 	 * @return The sanitized source.
 	 */
 	protected function sanitize_src( $src ) {
-		return str_replace( array( '../', './', '://', '/', '.' ), '--', $src );
+		return str_replace( array( '../', './', '://', '/', '.', '[', ']', '=' ), '--', $src );
 	}
 
 	/**

@@ -101,6 +101,10 @@ class AjaxHandler {
 		$data = wp_unslash( $_REQUEST );
 		unset( $data['nonce'] );
 
+		if ( isset( $data['action'] ) ) {
+			unset( $data['action'] );
+		}
+
 		$result = call_user_func( $this->actions[ $action ], $data );
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( $result->get_error_message() );

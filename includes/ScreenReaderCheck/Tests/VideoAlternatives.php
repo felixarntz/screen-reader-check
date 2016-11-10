@@ -87,7 +87,10 @@ class VideoAlternatives extends Test {
 					break;
 				case 'video':
 				default:
-					$src = $video->getAttribute( 'src' );
+					$source = $video->find( 'source', false, true );
+					if ( $source ) {
+						$src = $source->getAttribute( 'src' );
+					}
 			}
 
 			$found = true;
@@ -178,7 +181,7 @@ class VideoAlternatives extends Test {
 					if ( ! in_array( $sanitized_src, $video_requests ) ) {
 						$video_requests[] = $sanitized_src;
 						$result['request_data'][] = array(
-							'slug'          => 'video_' . $sanitized_src,
+							'slug'          => 'video_type_' . $sanitized_src,
 							'type'          => 'select',
 							'label'         => __( 'Video Type', 'screen-reader-check' ),
 							'description'   => sprintf( __( 'Specify whether the video %s is video-only content or whether it also contains audio.', 'screen-reader-check' ), $this->linkify_src( $src ) ),

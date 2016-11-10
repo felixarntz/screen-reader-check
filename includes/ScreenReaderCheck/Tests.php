@@ -63,6 +63,7 @@ class Tests {
 			'ImagesAlternativeTexts',
 			'ObjectsAlternativeTexts',
 			'CaptchasAlternativeTexts',
+			'CaptchaAlternatives',
 			'VideoAlternatives',
 			'StructuralHeadings',
 			'StructuralLists',

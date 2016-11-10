@@ -84,20 +84,47 @@ class DynamicallyInsertedContent extends Test {
 			if ( $aria_controls ) {
 				$element_ids = array_map( 'trim', explode( ' ', $aria_controls ) );
 			} else {
-				$identifier = $this->get_button_identifier( $button );
-				$button_controlled_ids = $this->get_option( 'button_controlled_ids_' . $identifier );
-				if ( $button_controlled_ids ) {
-					if ( 'NONE' !== trim( $button_controlled_ids ) ) {
-						$element_ids = array_filter( array_map( 'trim', explode( ' ', $button_controlled_ids ) ) );
-					}
+				$elements = array();
+				$data_target = $button->getAttribute( 'data-target' );
+				if ( $data_target ) {
+					$elements = array( $data_target );
 				} else {
-					$result['request_data'][] = array(
-						'slug'          => 'button_controlled_ids_' . $identifier,
-						'type'          => 'text',
-						'label'         => __( 'Image Type', 'screen-reader-check' ),
-						'description'   => sprintf( __( 'If the button in line %s controls one or more specific elements, provide the element IDs, separated by a space. If the button is used for something else, enter &quot;NONE&quot;.', 'screen-reader-check' ), $button->getLineNo() ),
-						'default'       => 'NONE',
-					);
+					$identifier = $this->get_button_identifier( $button );
+					$button_controlled_elements = $this->get_option( 'button_controlled_elements_' . $identifier );
+					if ( $button_controlled_elements ) {
+						if ( 'NONE' !== trim( $button_controlled_elements ) ) {
+							$elements = array_filter( array_map( 'trim', explode( ' ', $button_controlled_elements ) ) );
+						}
+					} else {
+						$result['request_data'][] = array(
+							'slug'          => 'button_controlled_elements_' . $identifier,
+							'type'          => 'text',
+							'label'         => __( 'Dynamic Content Control', 'screen-reader-check' ),
+							'description'   => sprintf( __( 'If the button in line %s controls one or more specific elements, provide the element IDs, separated by a space. If the controlled elements do not have IDs, provide CSS class selectors (class name prefixed with a dot), that applies to them if possible. If the button is used for something else, enter &quot;NONE&quot;.', 'screen-reader-check' ), $button->getLineNo() ),
+							'default'       => 'NONE',
+						);
+					}
+				}
+
+				if ( ! empty( $elements ) ) {
+					$found = true;
+
+					foreach ( $elements as $element ) {
+						if ( '.' === substr( $element, 0, 1 ) ) {
+							$result['message_codes'][] = 'missing_aria_controls_with_id';
+							$result['messages'][] = $this->wrap_message( sprintf( __( 'The element with the selector %s must receive a unique ID, and then the following button should have an <code>aria-controls</code> attribute with that ID to indicate that their interactive relation:', 'screen-reader-check' ), $element ) . '<br>' . $this->wrap_code( $button->outerHtml() ), $button->getLineNo() );
+							$has_warnings = true;
+						} else {
+							if ( '#' === substr( $element, 0, 1 ) ) {
+								$element = substr( $element, 1 );
+							}
+							$element_ids[] = $element;
+
+							$result['message_codes'][] = 'missing_aria_controls';
+							$result['messages'][] = $this->wrap_message( sprintf( __( 'The following button should have an <code>aria-controls</code> attribute with the ID of the element %s to indicate that their interactive relation:', 'screen-reader-check' ), '#' . $element ) . '<br>' . $this->wrap_code( $button->outerHtml() ), $button->getLineNo() );
+							$has_warnings = true;
+						}
+					}
 				}
 			}
 

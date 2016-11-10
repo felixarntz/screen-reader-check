@@ -52,6 +52,8 @@ class MultipleWays extends Test {
 		foreach ( $forms as $form ) {
 			$search = $form->find( 'input' );
 			if ( count( $search ) === 1 ) {
+				$search = $search[0];
+
 				if ( in_array( $search->getAttribute( 'type' ), array( 'search' ), true )
 					|| in_array( $search->getAttribute( 'id' ), array( 'search', 's' ), true )
 					|| in_array( $search->getAttribute( 'name' ), array( 'search', 's' ), true )

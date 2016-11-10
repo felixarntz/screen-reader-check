@@ -49,10 +49,13 @@ class MisuseTypographicalCharacters extends Test {
 		$has_errors = false;
 		$has_warnings = false;
 
-		$elements = $dom->find( '*', true );
+		$elements = $dom->find( 'body *' );
 		foreach ( $elements as $element ) {
 			if ( ! $element->isTextNode() ) {
-				continue;
+				$element = $element->getNext();
+				if ( ! $element || ! $element->isTextNode() ) {
+					continue;
+				}
 			}
 
 			$whitespace = array();

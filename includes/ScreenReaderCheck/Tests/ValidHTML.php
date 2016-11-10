@@ -78,16 +78,27 @@ class ValidHTML extends Test {
 		$issues = $this->w3c_validate( $dom->outerHtml() );
 		if ( ! is_wp_error( $issues ) ) {
 			foreach ( $issues as $issue ) {
-				if ( 'info' === $issue['type'] && ! empty( $issue['subType'] ) && 'warning' === $issue['subType'] ) {
-					// Skip role and alt attribute warnings (the latter are already covered in other tests).
-					if ( false !== strpos( $issue['message'], ' role is unnecessary for element' ) ) {
-						continue;
-					} elseif ( false !== strpos( $issue['message'], ' does not need a “role” attribute' ) ) {
-						continue;
-					} elseif ( false !== strpos( $issue['message'], ' must have an “alt” attribute' ) ) {
-						continue;
+				$skip = false;
+				$skip_patterns = array(
+					// Redundant roles should not be covered according to BITV.
+					' role is unnecessary for element',
+					' does not need a “role” attribute',
+					// Alternative texts are covered in other tests.
+					' must have an “alt” attribute',
+					// Document language is covered in another test.
+					' document appears to be written in',
+				);
+				foreach ( $skip_patterns as $skip_pattern ) {
+					if ( false !== strpos( $issue['message'], $skip_pattern ) ) {
+						$skip = true;
+						break;
 					}
+				}
+				if ( $skip ) {
+					continue;
+				}
 
+				if ( 'info' === $issue['type'] && ! empty( $issue['subType'] ) && 'warning' === $issue['subType'] ) {
 					$has_warnings = true;
 					$result['message_codes'][] = str_replace( '-', '_', sanitize_title( $issue['message'] ) );
 					$result['messages'][] = $this->wrap_message( $issue['message'] . '<br>' . $this->wrap_code( $issue['extract'] ), $issue['lastLine'] );

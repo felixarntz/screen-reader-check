@@ -32,7 +32,7 @@ class Dom extends Node {
 	public static function parse( $html ) {
 		$doc = new DOMDocument();
 
-		$status = $doc->loadHTML( $html );
+		$status = $doc->loadHTML( $html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		if ( ! $status ) {
 			return null;
 		}

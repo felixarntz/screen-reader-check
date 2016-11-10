@@ -79,10 +79,12 @@ class ValidHTML extends Test {
 		if ( ! is_wp_error( $issues ) ) {
 			foreach ( $issues as $issue ) {
 				if ( 'info' === $issue['type'] && ! empty( $issue['subType'] ) && 'warning' === $issue['subType'] ) {
-					// Skip role warnings.
+					// Skip role and alt attribute warnings (the latter are already covered in other tests).
 					if ( false !== strpos( $issue['message'], ' role is unnecessary for element' ) ) {
 						continue;
 					} elseif ( false !== strpos( $issue['message'], ' does not need a “role” attribute' ) ) {
+						continue;
+					} elseif ( false !== strpos( $issue['message'], ' must have an “alt” attribute' ) ) {
 						continue;
 					}
 

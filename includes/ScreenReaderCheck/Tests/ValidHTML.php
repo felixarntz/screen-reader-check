@@ -85,6 +85,7 @@ class ValidHTML extends Test {
 					' does not need a “role” attribute',
 					// Alternative texts are covered in other tests.
 					' must have an “alt” attribute',
+					' is missing required attribute “alt”',
 					// Document language is covered in another test.
 					' document appears to be written in',
 				);

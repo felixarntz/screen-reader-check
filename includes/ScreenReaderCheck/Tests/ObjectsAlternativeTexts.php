@@ -69,7 +69,7 @@ class ObjectsAlternativeTexts extends Test {
 				$result['messages'][] = $this->wrap_message( __( 'The following object does not have any alternative content:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $object->outerHtml() ), $object->getLineNo() );
 				$has_errors = true;
 			} else {
-				$children = $object->hasChildren( true );
+				$children = $object->getChildren( true );
 				if ( 1 === count( $children ) && ! $children[0]->isTextNode() && ! in_array( $children[0]->getTagName(), array( 'object', 'embed' ) ) ) {
 					$alternative = $children[0];
 					if ( 'img' === $alternative->getTagName() ) {

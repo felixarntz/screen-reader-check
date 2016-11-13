@@ -76,13 +76,13 @@ class VideoAlternatives extends Test {
 				case 'object':
 					$src = $video->getAttribute( 'data' );
 					if ( ! $src || ! $this->is_video_file( $src ) ) {
-						continue;
+						$src = null;
 					}
 					break;
 				case 'embed':
 					$src = $video->getAttribute( 'src' );
 					if ( ! $src || ! $this->is_video_file( $src ) ) {
-						continue;
+						$src = null;
 					}
 					break;
 				case 'video':
@@ -93,9 +93,9 @@ class VideoAlternatives extends Test {
 					}
 			}
 
-			$found = true;
-
 			if ( $src && is_string( $src ) ) {
+				$found = true;
+
 				$sanitized_src = $this->sanitize_src( $src );
 
 				$alternative = $video->find( 'object,embed,audio', false, true );

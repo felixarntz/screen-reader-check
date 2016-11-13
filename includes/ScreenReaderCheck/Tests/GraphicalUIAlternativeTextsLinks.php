@@ -67,8 +67,25 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 		foreach ( $images as $image ) {
 			$link = $image->getParent();
 			$link_children = $link->getChildren( true );
+
 			if ( 1 < count( $link_children ) ) {
-				continue;
+				$linktext = '';
+				foreach ( $link_children as $link_child ) {
+					if ( $link_child->isTextNode() ) {
+						$linktext .= $link_child->text();
+					} elseif ( 'img' !== $link_child->getTagName() ) {
+						$text_content = $link_child->text();
+						if ( $text_content ) {
+							$linktext .= $text_content;
+						}
+					}
+				}
+
+				$linktext = trim( $linktext );
+
+				if ( ! empty( $linktext ) ) {
+					continue;
+				}
 			}
 
 			$found = true;

@@ -68,7 +68,7 @@ class GraphicalUIAlternativeTextsButtons extends Test {
 
 			if ( ! $alt ) {
 				$result['message_codes'][] = 'missing_alternative_text';
-				$result['messages'][] = $this->wrap_message( __( 'The following graphical button is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
+				$result['messages'][] = $this->wrap_message( __( 'The following graphical button is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image_button->outerHtml() ), $image_button->getLineNo() );
 				$has_errors = true;
 			} else {
 				$src = $image_button->getAttribute( 'src' );

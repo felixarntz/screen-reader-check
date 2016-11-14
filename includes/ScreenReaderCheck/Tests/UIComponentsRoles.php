@@ -51,7 +51,7 @@ class UIComponentsRoles extends Test {
 	 * @return array The modified result array.
 	 */
 	protected function run( $result, $dom ) {
-		$unsemantic_links = $dom->find( 'a[href="#"]' );
+		$unsemantic_links = $dom->find( 'a' );
 
 		if ( count( $unsemantic_links ) === 0 ) {
 			$result['type'] = 'skipped';
@@ -60,16 +60,36 @@ class UIComponentsRoles extends Test {
 			return $result;
 		}
 
+		$found = false;
+
 		$has_errors = false;
 		$has_warnings = false;
 
 		foreach ( $unsemantic_links as $link ) {
+			$href = $link->getAttribute( 'href' );
+			if ( ! $href ) {
+				continue;
+			}
+
+			if ( '#' !== $href && '#' !== substr( $href, strlen( $href ) - 1 ) ) {
+				continue;
+			}
+
+			$found = true;
+
 			$role = $link->getAttribute( 'role' );
 			if ( ! $role ) {
 				$result['message_codes'][] = 'missing_role_attribute';
 				$result['messages'][] = $this->wrap_message( __( 'The following non-semantically used <code>a</code> tag is missing a <code>role</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $link->outerHtml() ), $link->getLineNo() );
 				$has_errors = true;
 			}
+		}
+
+		if ( ! $found ) {
+			$result['type'] = 'skipped';
+			$result['message_codes'][] = 'skipped';
+			$result['messages'][] = __( 'There are no non-semantically used <code>a</code> tags in the HTML code provided. Therefore this test was skipped.', 'screen-reader-check' );
+			return $result;
 		}
 
 		if ( ! $has_errors && $has_warnings ) {

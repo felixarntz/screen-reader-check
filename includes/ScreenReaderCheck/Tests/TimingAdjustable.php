@@ -48,7 +48,7 @@ class TimingAdjustable extends Test {
 	protected function run( $result, $dom ) {
 		$http_equiv_refresh = $dom->find( 'meta[http-equiv="refresh"]', false, true );
 		if ( $http_equiv_refresh ) {
-			$result['message_codes'][] = 'invalid_http_equiv_refresh';
+			$result['message_codes'][] = 'error_invalid_http_equiv_refresh';
 			$result['messages'][] = $this->wrap_message( __( 'A meta tag with <code>http-equiv=&quot;refresh&quot;</code> was found:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $http_equiv_refresh->outerHtml() ), $http_equiv_refresh->getLineNo() );
 			return $result;
 		}

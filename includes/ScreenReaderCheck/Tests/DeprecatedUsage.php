@@ -53,14 +53,14 @@ class DeprecatedUsage extends Test {
 	protected function run( $result, $dom ) {
 		$elements = $dom->find( implode( ',', $this->get_deprecated_tags() ) );
 		foreach ( $elements as $element ) {
-			$result['message_codes'][] = 'deprecated_tag';
+			$result['message_codes'][] = 'error_deprecated_tag';
 			$result['messages'][] = sprintf( __( 'The deprecated tag <code>%1$s</code> is used in line %2$s.', 'screen-reader-check' ), $element->getTagName(), $element->getLineNo() );
 		}
 
 		foreach ( $this->get_deprecated_attributes() as $deprecated_attribute ) {
 			$elements = $dom->find( '[' . $deprecated_attribute . ']' );
 			foreach ( $elements as $element ) {
-				$result['message_codes'][] = 'deprecated_attribute';
+				$result['message_codes'][] = 'error_deprecated_attribute';
 				$result['messages'][] = sprintf( __( 'The deprecated attribute <code>%1$s</code> is used in line %2$s.', 'screen-reader-check' ), $deprecated_attribute, $element->getLineNo() );
 			}
 		}
@@ -72,7 +72,7 @@ class DeprecatedUsage extends Test {
 			}
 			$elements = $dom->find( implode( ',', $selectors ) );
 			foreach ( $elements as $element ) {
-				$result['message_codes'][] = 'deprecated_attribute_with_tag';
+				$result['message_codes'][] = 'error_deprecated_attribute_with_tag';
 				$result['messages'][] = sprintf( __( 'The attribute <code>%1$s</code> is deprecated with the tag <code>%2$s</code>, but used that way in line %3$s.', 'screen-reader-check' ), $deprecated_attribute, $element->getTagName(), $element->getLineNo() );
 			}
 		}
@@ -82,7 +82,7 @@ class DeprecatedUsage extends Test {
 			foreach ( $elements as $element ) {
 				$tagname = $element->getTagName();
 				if ( ! in_array( $tagname, $whitelist, true ) ) {
-					$result['message_codes'][] = 'deprecated_attribute_with_tag';
+					$result['message_codes'][] = 'error_deprecated_attribute_with_tag';
 					$result['messages'][] = sprintf( __( 'The attribute <code>%1$s</code> is deprecated with the tag <code>%2$s</code>, but used that way in line %3$s.', 'screen-reader-check' ), $deprecated_attribute, $tagname, $element->getLineNo() );
 				}
 			}

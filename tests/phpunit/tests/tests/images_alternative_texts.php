@@ -30,7 +30,7 @@ class Test_ImagesAlternativeTexts extends SRC_UnitTestCase_For_Test {
 				),
 				array(),
 				array(
-					'empty_alt_attribute_content',
+					'error_empty_alt_attribute_content',
 				),
 			),
 			'invalid_images' => array(
@@ -41,13 +41,13 @@ class Test_ImagesAlternativeTexts extends SRC_UnitTestCase_For_Test {
 				),
 				array(),
 				array(
-					'missing_alt_attribute',
-					'alternative_text_too_long',
-					'non_descriptive_alternative_text',
-					'usage_of_title_attribute_layout',
-					'empty_alt_attribute_content',
-					'alt_attribute_part_of_src',
-					'non_descriptive_alternative_text',
+					'error_missing_alt_attribute',
+					'error_alternative_text_too_long',
+					'error_non_descriptive_alternative_text',
+					'warning_usage_of_title_attribute_layout',
+					'error_empty_alt_attribute_content',
+					'error_alt_attribute_part_of_src',
+					'error_non_descriptive_alternative_text',
 				),
 			),
 			'images_to_skip' => array(

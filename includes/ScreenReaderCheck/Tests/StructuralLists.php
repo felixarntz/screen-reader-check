@@ -61,7 +61,7 @@ class StructuralLists extends Test {
 			$has_lists = $this->get_option( 'has_lists' );
 			if ( $has_lists ) {
 				if ( 'yes' === $has_lists ) {
-					$result['message_codes'][] = 'missing_list_markup_for_lists';
+					$result['message_codes'][] = 'error_missing_list_markup_for_lists';
 					$result['messages'][] = __( 'The page contains lists that do not use proper list markup.', 'screen-reader-check' );
 					$has_errors = true;
 				} elseif ( count( $navs ) === 0 ) {
@@ -95,7 +95,7 @@ class StructuralLists extends Test {
 			$links    = $nav->find( 'a' );
 			$list_tag = $nav->find( 'ul,ol', false, true );
 			if ( count( $links ) > 3 && ! $list_tag ) {
-				$result['message_codes'][] = 'missing_list_markup_for_menu';
+				$result['message_codes'][] = 'error_missing_list_markup_for_menu';
 				$result['messages'][] = $this->wrap_message( __( 'The following menu does not use list markup although it contains more than three links', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $nav->outerHtml() ), $nav->getLineNo() );
 				$has_errors = true;
 			}

@@ -91,7 +91,7 @@ class GraphicalUIAlternativeTextsLinks extends Test {
 			$found = true;
 
 			if ( ! $link->getAttribute( 'aria-label' ) && ! $link->getAttribute( 'title' ) && ! $image->getAttribute( 'alt' ) ) {
-				$result['message_codes'][] = 'missing_alternative_text';
+				$result['message_codes'][] = 'error_missing_alternative_text';
 				$result['messages'][] = $this->wrap_message( __( 'The following graphical link is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $link->outerHtml() ), $link->getLineNo() );
 				$has_errors = true;
 			}

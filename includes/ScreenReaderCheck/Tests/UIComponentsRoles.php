@@ -79,7 +79,7 @@ class UIComponentsRoles extends Test {
 
 			$role = $link->getAttribute( 'role' );
 			if ( ! $role ) {
-				$result['message_codes'][] = 'missing_role_attribute';
+				$result['message_codes'][] = 'error_missing_role_attribute';
 				$result['messages'][] = $this->wrap_message( __( 'The following non-semantically used <code>a</code> tag is missing a <code>role</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $link->outerHtml() ), $link->getLineNo() );
 				$has_errors = true;
 			}

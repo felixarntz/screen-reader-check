@@ -65,14 +65,14 @@ class OrganizedContent extends Test {
 				continue;
 			}
 
-			$result['message_codes'][] = 'misuse_of_br_tag';
+			$result['message_codes'][] = 'error_misuse_of_br_tag';
 			$result['messages'][] = $this->wrap_message( __( 'Actual paragraph markup must be used instead of the following occurrence of two <code>br</code> tags:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $first_break->outerHtml() . $last_break->outerHtml() ), $first_break->getLineNo() );
 			$has_errors = true;
 		}
 
 		$bolds = $dom->find( 'b' );
 		foreach ( $bolds as $bold ) {
-			$result['message_codes'][] = 'misuse_of_b_tag';
+			$result['message_codes'][] = 'error_misuse_of_b_tag';
 			$result['messages'][] = $this->wrap_message( __( 'The following content is highlighted using the old <code>b</code> tag and thus should use <code>strong</code> instead:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $bold->outerHtml() ), $bold->getLineNo() );
 			$has_errors = true;
 		}
@@ -107,7 +107,7 @@ class OrganizedContent extends Test {
 					}
 				}
 			}
-			$result['message_codes'][] = 'misuse_of_i_tag';
+			$result['message_codes'][] = 'error_misuse_of_i_tag';
 			$result['messages'][] = $this->wrap_message( __( 'The following content is highlighted using the old <code>i</code> tag and thus should use <code>em</code> instead:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $italic->outerHtml() ), $italic->getLineNo() );
 			$has_errors = true;
 		}
@@ -144,7 +144,7 @@ class OrganizedContent extends Test {
 						}
 						$code = implode( '<br>', $code );
 
-						$result['message_codes'][] = 'missing_fieldset_for_radio_group';
+						$result['message_codes'][] = 'error_missing_fieldset_for_radio_group';
 						$result['messages'][] = $this->wrap_message( __( 'The following set of radio buttons should be properly grouped using <code>fieldset</code>:', 'screen-reader-check' ) . '<br>' . $code, $lineno );
 						$has_errors = true;
 					}
@@ -178,7 +178,7 @@ class OrganizedContent extends Test {
 						}
 						$code = implode( '<br>', $code );
 
-						$result['message_codes'][] = 'missing_fieldset_for_checkbox_group';
+						$result['message_codes'][] = 'error_missing_fieldset_for_checkbox_group';
 						$result['messages'][] = $this->wrap_message( __( 'The following set of checkboxes should be properly grouped using <code>fieldset</code>:', 'screen-reader-check' ) . '<br>' . $code, $lineno );
 						$has_errors = true;
 					}

@@ -82,7 +82,7 @@ class OrganizedSelectLists extends Test {
 					$text = trim( $option->text() );
 					foreach ( $forbidden_strings as $forbidden_string ) {
 						if ( 0 === strpos( $text, $forbidden_string ) ) {
-							$result['message_codes'][] = 'misuse_of_characters_for_option_indent';
+							$result['message_codes'][] = 'error_misuse_of_characters_for_option_indent';
 							$result['messages'][] = $this->wrap_message( __( 'The following select list uses typographic characters to indicate groups:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $select->outerHtml() ), $select->getLineNo() );
 							$has_errors = true;
 							break 2;

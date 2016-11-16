@@ -61,12 +61,12 @@ class KeyboardControlsTabindex extends Test {
 		foreach ( $tabindexes as $tabindex ) {
 			$value = (int) $tabindex->getAttribute( 'tabindex' );
 			if ( $value > 0 ) {
-				$result['message_codes'][] = 'tabindex_greater_than_0';
+				$result['message_codes'][] = 'error_tabindex_greater_than_0';
 				$result['messages'][] = $this->wrap_message( __( 'The <code>tabindex</code> attribute of the following element is greater than 0:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $tabindex->outerHtml() ), $tabindex->getLineNo() );
 				$has_errors = true;
 			} else {
 				if ( $value === -1 ) {
-					$result['message_codes'][] = 'tabindex_minus_1';
+					$result['message_codes'][] = 'warning_tabindex_minus_1';
 					$result['messages'][] = $this->wrap_message( __( 'The <code>tabindex</code> attribute of the following element is set to -1, thus can only reached via JavaScript:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $tabindex->outerHtml() ), $tabindex->getLineNo() );
 					$has_warnings = true;
 				}

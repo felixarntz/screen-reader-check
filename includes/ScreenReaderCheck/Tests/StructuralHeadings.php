@@ -59,7 +59,7 @@ class StructuralHeadings extends Test {
 
 		if ( count( $headings ) === 0 ) {
 			$result['type'] = 'warning';
-			$result['message_codes'][] = 'no_headings_in_content';
+			$result['message_codes'][] = 'warning_no_headings_in_content';
 			$result['messages'][] = __( 'There are no headings in the HTML code provided. Headings should be used to give your page an easily understandable structure.', 'screen-reader-check' );
 			return $result;
 		}
@@ -71,7 +71,7 @@ class StructuralHeadings extends Test {
 		if ( count( $sectioning_contents ) === 0 ) {
 			$headings_wrong = $this->headings_nested_incorrectly( $headings );
 			if ( $headings_wrong ) {
-				$result['message_codes'][] = 'headings_nested_incorrectly_no_sectioning_content';
+				$result['message_codes'][] = 'warning_headings_nested_incorrectly_no_sectioning_content';
 				$result['messages'][] = __( 'The following headings are nested incorrectly:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $headings_wrong );
 				$has_warnings = true;
 			}
@@ -101,7 +101,7 @@ class StructuralHeadings extends Test {
 			foreach ( $heading_groups as $heading_group ) {
 				$headings_wrong = $this->headings_nested_incorrectly( $heading_group );
 				if ( $headings_wrong ) {
-					$result['message_codes'][] = 'headings_nested_incorrectly_sectioning_content';
+					$result['message_codes'][] = 'warning_headings_nested_incorrectly_sectioning_content';
 					$result['messages'][] = __( 'The following headings are nested incorrectly:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $headings_wrong );
 					$has_warnings = true;
 				}
@@ -110,7 +110,7 @@ class StructuralHeadings extends Test {
 			if ( $h1_count <= 1 ) {
 				$articles = $dom->find( 'article' );
 				if ( count( $articles ) >= 2 || count( $sectioning_contents ) > 3 ) {
-					$result['message_codes'][] = 'single_h1_only';
+					$result['message_codes'][] = 'error_single_h1_only';
 					$result['messages'][] = __( 'There is only one <code>h1</code> heading in the entire page although it contains several separate areas of content.', 'screen-reader-check' );
 					$has_errors = true;
 				}

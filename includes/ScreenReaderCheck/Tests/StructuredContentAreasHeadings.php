@@ -74,7 +74,7 @@ class StructuredContentAreasHeadings extends Test {
 			if ( ! $heading ) {
 				$id = $sectioning_content->getAttribute( 'id' );
 				if ( ! $id ) {
-					$result['message_codes'][] = 'missing_heading_or_skip_link';
+					$result['message_codes'][] = 'error_missing_heading_or_skip_link';
 					$result['messages'][] = sprintf( __( 'The %1$s in line %2$s has neither a heading nor a skip link leading to it.', 'screen-reader-check' ), $sectioning_content->getTagName(), $sectioning_content->getLineNo() );
 					$has_errors = true;
 				} else {
@@ -87,7 +87,7 @@ class StructuredContentAreasHeadings extends Test {
 						}
 					}
 					if ( ! $found_skip_link ) {
-						$result['message_codes'][] = 'missing_heading_or_skip_link';
+						$result['message_codes'][] = 'error_missing_heading_or_skip_link';
 						$result['messages'][] = sprintf( __( 'The %1$s in line %2$s has neither a heading nor a skip link leading to it.', 'screen-reader-check' ), $sectioning_content->getTagName(), $sectioning_content->getLineNo() );
 						$has_errors = true;
 					}

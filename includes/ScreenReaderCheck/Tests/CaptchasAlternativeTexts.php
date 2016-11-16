@@ -78,12 +78,12 @@ class CaptchasAlternativeTexts extends Test {
 
 			$alt = $image->getAttribute( 'alt' );
 			if ( ! $alt ) {
-				$result['message_codes'][] = 'missing_alternative_text';
+				$result['message_codes'][] = 'error_missing_alternative_text';
 				$result['messages'][] = $this->wrap_message( __( 'The following CAPTCHA is missing an alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 				$has_errors = true;
 			} else {
 				if ( strtolower( $alt ) === 'captcha' ) {
-					$result['message_codes'][] = 'non_descriptive_alternative_text';
+					$result['message_codes'][] = 'error_non_descriptive_alternative_text';
 					$result['messages'][] = $this->wrap_message( __( 'The following CAPTCHA does not have a helpful alternative text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 					$has_errors = true;
 				}

@@ -111,7 +111,7 @@ class DynamicallyInsertedContent extends Test {
 
 					foreach ( $elements as $element ) {
 						if ( '.' === substr( $element, 0, 1 ) ) {
-							$result['message_codes'][] = 'missing_aria_controls_with_id';
+							$result['message_codes'][] = 'warning_missing_aria_controls_with_id';
 							$result['messages'][] = $this->wrap_message( sprintf( __( 'The element with the selector %s must receive a unique ID, and then the following button should have an <code>aria-controls</code> attribute with that ID to indicate that their interactive relation:', 'screen-reader-check' ), $element ) . '<br>' . $this->wrap_code( $button->outerHtml() ), $button->getLineNo() );
 							$has_warnings = true;
 						} else {
@@ -120,7 +120,7 @@ class DynamicallyInsertedContent extends Test {
 							}
 							$element_ids[] = $element;
 
-							$result['message_codes'][] = 'missing_aria_controls';
+							$result['message_codes'][] = 'warning_missing_aria_controls';
 							$result['messages'][] = $this->wrap_message( sprintf( __( 'The following button should have an <code>aria-controls</code> attribute with the ID of the element %s to indicate that their interactive relation:', 'screen-reader-check' ), '#' . $element ) . '<br>' . $this->wrap_code( $button->outerHtml() ), $button->getLineNo() );
 							$has_warnings = true;
 						}
@@ -137,7 +137,7 @@ class DynamicallyInsertedContent extends Test {
 			foreach ( $element_ids as $element_id ) {
 				$element = $dom->find( '#' . $element_id, false, true );
 				if ( ! $element ) {
-					$result['message_codes'][] = 'dynamic_element_not_exist';
+					$result['message_codes'][] = 'error_dynamic_element_not_exist';
 					$result['messages'][] = $this->wrap_message( sprintf( __( 'The element with the ID %s does not exist although it is controlled by the following button:', 'screen-reader-check' ), $element_id ) . '<br>' . $this->wrap_code( $button->outerHtml() ), $button->getLineNo() );
 					$has_errors = true;
 				} else {
@@ -147,7 +147,7 @@ class DynamicallyInsertedContent extends Test {
 						$valid_focus_change = $this->get_option( 'valid_focus_change_' . $identifier . '_for_id_' . $element_id );
 						if ( $valid_focus_change ) {
 							if ( 'no' === $valid_focus_change ) {
-								$result['message_codes'][] = 'dynamic_element_focus_not_adjusted';
+								$result['message_codes'][] = 'error_dynamic_element_focus_not_adjusted';
 								$result['messages'][] = $this->wrap_message( sprintf( __( 'The focus for the element with ID %s is not adjusted accordingly when it is toggled by the following button:', 'screen-reader-check' ), $element_id ) . '<br>' . $this->wrap_code( $button->outerHtml() ), $button->getLineNo() );
 								$has_errors = true;
 							}

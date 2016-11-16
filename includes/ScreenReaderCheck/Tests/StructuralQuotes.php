@@ -60,7 +60,7 @@ class StructuralQuotes extends Test {
 			$has_blockquotes = $this->get_option( 'has_blockquotes' );
 			if ( $has_blockquotes ) {
 				if ( 'yes' === $has_blockquotes ) {
-					$result['message_codes'][] = 'missing_blockquote_markup_for_quotes';
+					$result['message_codes'][] = 'error_missing_blockquote_markup_for_quotes';
 					$result['messages'][] = __( 'The page contains blockquotes that do not use proper blockquote markup.', 'screen-reader-check' );
 					$has_errors = true;
 				} else {

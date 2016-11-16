@@ -60,14 +60,14 @@ class MisuseTypographicalCharacters extends Test {
 
 			$whitespace = array();
 			if ( preg_match( '/(&nbsp;){2,}/m', trim( $element->text() ), $whitespace ) ) {
-				$result['message_codes'][] = 'misuse_of_whitespace';
+				$result['message_codes'][] = 'error_misuse_of_whitespace';
 				$result['messages'][] = $this->wrap_message( __( 'Whitespace must not be used to format text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $whitespace[0] ), $element->getLineNo() );
 				$has_errors = true;
 			}
 
 			$hyphen = array();
 			if ( preg_match( '/(\-\-\-|___)+/m', trim( $element->text() ), $hyphen ) ) {
-				$result['message_codes'][] = 'misuse_of_hyphen';
+				$result['message_codes'][] = 'error_misuse_of_hyphen';
 				$result['messages'][] = $this->wrap_message( __( 'Hyphens or underscores must not be used to create horizontal lines:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $hyphen[0] ), $element->getLineNo() );
 				$has_errors = true;
 			}

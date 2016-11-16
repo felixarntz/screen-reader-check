@@ -74,7 +74,7 @@ class MultipleWays extends Test {
 
 		if ( ! $found ) {
 			$result['type'] = 'warning';
-			$result['message_codes'][] = 'missing_search_form';
+			$result['message_codes'][] = 'warning_missing_search_form';
 			$result['messages'][] = __( 'No search form was detected on the page. It is recommended to provide such functionality.', 'screen-reader-check' );
 			return $result;
 		}

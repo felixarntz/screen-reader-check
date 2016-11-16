@@ -90,7 +90,7 @@ class CaptchaAlternatives extends Test {
 			$has_alternative = $this->get_option( $identifier . '_has_alternative' );
 			if ( $has_alternative ) {
 				if ( 'yes' !== $has_alternative ) {
-					$result['message_codes'][] = 'missing_captcha_alternative';
+					$result['message_codes'][] = 'error_missing_captcha_alternative';
 					$result['messages'][] = $this->wrap_message( __( 'The following CAPTCHA is missing a non-image based alternative:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $image->outerHtml() ), $image->getLineNo() );
 					$has_errors = true;
 				}

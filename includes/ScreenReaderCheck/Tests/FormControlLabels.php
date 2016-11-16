@@ -94,7 +94,7 @@ class FormControlLabels extends Test {
 			if ( ! $label ) {
 				$title = $form_control->getAttribute( 'title' );
 				if ( ! $title ) {
-					$result['message_codes'][] = 'missing_label';
+					$result['message_codes'][] = 'error_missing_label';
 					$result['messages'][] = $this->wrap_message( __( 'The following form control neither is connected to a <code>label</code> element nor provides a <code>title</code> attribute:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $form_control->outerHtml() ), $form_control->getLineNo() );
 					$has_errors = true;
 				}

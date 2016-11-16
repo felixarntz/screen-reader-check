@@ -60,22 +60,22 @@ class DocumentLanguage extends Test {
 		if ( false !== strpos( $doctype, 'xhtml' ) ) {
 			$xml_lang = $html->getAttribute( 'xml:lang' );
 			if ( ! $xml_lang ) {
-				$result['message_codes'][] = 'missing_xml_lang_attribute';
+				$result['message_codes'][] = 'error_missing_xml_lang_attribute';
 				$result['messages'][] = __( 'The <code>html</code> element is missing the <code>xml:lang</code> attribute.', 'screen-reader-check' );
 				$has_errors = true;
 			} elseif ( ! $this->is_lang_valid( $xml_lang ) ) {
-				$result['message_codes'][] = 'invalid_xml_lang_attribute';
+				$result['message_codes'][] = 'error_invalid_xml_lang_attribute';
 				$result['messages'][] = __( 'The <code>html</code> element has an invalid <code>xml:lang</code> attribute.', 'screen-reader-check' );
 				$has_errors = true;
 			}
 		} else {
 			$lang = $html->getAttribute( 'lang' );
 			if ( ! $lang ) {
-				$result['message_codes'][] = 'missing_lang_attribute';
+				$result['message_codes'][] = 'error_missing_lang_attribute';
 				$result['messages'][] = __( 'The <code>html</code> element is missing the <code>lang</code> attribute.', 'screen-reader-check' );
 				$has_errors = true;
 			} elseif ( ! $this->is_lang_valid( $lang ) ) {
-				$result['message_codes'][] = 'invalid_lang_attribute';
+				$result['message_codes'][] = 'error_invalid_lang_attribute';
 				$result['messages'][] = __( 'The <code>html</code> element has an invalid <code>lang</code> attribute.', 'screen-reader-check' );
 				$has_errors = true;
 			}

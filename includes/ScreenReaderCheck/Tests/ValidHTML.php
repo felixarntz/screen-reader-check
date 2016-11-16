@@ -67,7 +67,7 @@ class ValidHTML extends Test {
 		$doctype = $dom->getDocumentType();
 		if ( 'unknown' === $doctype ) {
 			$result['type'] = 'error';
-			$result['message_codes'][] = 'missing_doctype';
+			$result['message_codes'][] = 'error_missing_doctype';
 			$result['messages'][] = __( 'No doctype has been declared for the page.', 'screen-reader-check' );
 			return $result;
 		}
@@ -101,11 +101,11 @@ class ValidHTML extends Test {
 
 				if ( 'info' === $issue['type'] && ! empty( $issue['subType'] ) && 'warning' === $issue['subType'] ) {
 					$has_warnings = true;
-					$result['message_codes'][] = str_replace( '-', '_', sanitize_title( $issue['message'] ) );
+					$result['message_codes'][] = 'warning_' . str_replace( '-', '_', sanitize_title( $issue['message'] ) );
 					$result['messages'][] = $this->wrap_message( $issue['message'] . '<br>' . $this->wrap_code( $issue['extract'] ), $issue['lastLine'] );
 				} elseif ( 'error' === $issue['type'] ) {
 					$has_errors = true;
-					$result['message_codes'][] = str_replace( '-', '_', sanitize_title( $issue['message'] ) );
+					$result['message_codes'][] = 'error_' . str_replace( '-', '_', sanitize_title( $issue['message'] ) );
 					$result['messages'][] = $this->wrap_message( $issue['message'] . '<br>' . $this->wrap_code( $issue['extract'] ), $issue['lastLine'] );
 				}
 			}

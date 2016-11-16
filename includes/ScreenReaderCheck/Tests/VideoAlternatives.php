@@ -119,11 +119,11 @@ class VideoAlternatives extends Test {
 							$has_alternative_audio_or_text = $this->get_option( 'video_alternative_audio_or_text_' . $sanitized_src );
 							if ( $has_alternative_audio_or_text ) {
 								if ( 'yes' === $has_alternative_audio_or_text ) {
-									$result['message_codes'][] = 'alternative_content_outside_of_body';
+									$result['message_codes'][] = 'warning_alternative_content_outside_of_body';
 									$result['messages'][] = $this->wrap_message( __( 'The alternative content for the following silent video should be located in the element body:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $video->outerHtml() ), $video->getLineNo() );
 									$has_warnings = true;
 								} else {
-									$result['message_codes'][] = 'missing_alternative_content';
+									$result['message_codes'][] = 'error_missing_alternative_content';
 									$result['messages'][] = $this->wrap_message( __( 'The following silent video is missing an audio or text alternative:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $video->outerHtml() ), $video->getLineNo() );
 									$has_errors = true;
 								}
@@ -152,7 +152,7 @@ class VideoAlternatives extends Test {
 							$has_audio_description = $this->get_option( 'video_alternative_audio_description_' . $sanitized_src );
 							if ( $has_audio_description ) {
 								if ( 'yes' !== $has_audio_description ) {
-									$result['message_codes'][] = 'missing_audio_description';
+									$result['message_codes'][] = 'error_missing_audio_description';
 									$result['messages'][] = $this->wrap_message( __( 'The following video is missing an audio description:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $video->outerHtml() ), $video->getLineNo() );
 									$has_errors = true;
 								}

@@ -86,14 +86,14 @@ class HelpfulLinkTexts extends Test {
 			}
 
 			if ( empty( $linktext ) ) {
-				$result['message_codes'][] = 'missing_link_text';
+				$result['message_codes'][] = 'error_missing_link_text';
 				$result['messages'][] = $this->wrap_message( __( 'The following link is missing a link text:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $link->outerHtml() ), $link->getLineNo() );
 				$has_errors = true;
 			} else {
 				$href = $link->getAttribute( 'href' );
 				if ( $href ) {
 					if ( false !== ( $other_href = array_search( $linktext, $linktexts, true ) ) && $other_href !== $href ) {
-						$result['message_codes'][] = 'duplicate_link_text';
+						$result['message_codes'][] = 'error_duplicate_link_text';
 						$result['messages'][] = $this->wrap_message( __( 'The link text of the following link is already used for another link with a different target:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $link->outerHtml() ), $link->getLineNo() );
 						$has_errors = true;
 					} else {
@@ -102,13 +102,13 @@ class HelpfulLinkTexts extends Test {
 						$linktext_words = preg_replace( '/[^ \w]+/', '', $linktext );
 						$blacklist = array( 'continue reading', 'read more', 'more', 'continue' );
 						if ( in_array( trim( strtolower( $linktext_words ) ), $blacklist ) ) {
-							$result['message_codes'][] = 'non_descriptive_link_text';
+							$result['message_codes'][] = 'error_non_descriptive_link_text';
 							$result['messages'][] = $this->wrap_message( __( 'The link text of the following link does not properly describe its target:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $link->outerHtml() ), $link->getLineNo() );
 							$has_errors = true;
 						} else {
 							$non_html_content = $this->check_non_html_content( $href );
 							if ( $non_html_content && ! preg_match( '/(' . implode( '|', $non_html_content ) . ')/i', $linktext ) ) {
-								$result['message_codes'][] = 'missing_non_html_content_link_text';
+								$result['message_codes'][] = 'error_missing_non_html_content_link_text';
 								$result['messages'][] = $this->wrap_message( __( 'The link text of the following link does not properly describe the target file type although it is non-HTML content:', 'screen-reader-check' ) . '<br>' . $this->wrap_code( $link->outerHtml() ), $link->getLineNo() );
 								$has_errors = true;
 							}

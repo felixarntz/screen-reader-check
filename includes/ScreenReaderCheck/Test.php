@@ -71,6 +71,15 @@ abstract class Test {
 	protected $links = array();
 
 	/**
+	 * The stats class instance.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 * @var ScreenReaderCheck\Stats
+	 */
+	private $stats;
+
+	/**
 	 * Current check object.
 	 *
 	 * @since 1.0.0
@@ -86,7 +95,7 @@ abstract class Test {
 	 * @access public
 	 */
 	public function __construct() {
-		// Empty constructor
+		// Empty constructor.
 	}
 
 	/**
@@ -142,6 +151,10 @@ abstract class Test {
 		$result['check_id']              = $this->check->get_id();
 
 		$this->check = null;
+
+		if ( $stats && is_a( $stats, 'ScreenReaderCheck\Stats' ) ) {
+			$this->stats->log_result( $result );
+		}
 
 		return new TestResult( $result );
 	}
@@ -216,6 +229,18 @@ abstract class Test {
 	 */
 	public function get_guideline_anchor() {
 		return $this->guideline_anchor;
+	}
+
+	/**
+	 * Sets the stats class instance.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param ScreenReaderCheck\Stats $stats The stats class instance.
+	 */
+	public function set_stats( $stats ) {
+		$this->stats = $stats;
 	}
 
 	/**

@@ -290,6 +290,20 @@ class Tests {
 	}
 
 	/**
+	 * Passes the stats class instance to all tests.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @param ScreenReaderCheck\Stats $stats The stats class instance.
+	 */
+	public function set_stats( $stats ) {
+		foreach ( $this->tests as $test ) {
+			$test->set_stats( $stats );
+		}
+	}
+
+	/**
 	 * Magic caller for semi-private methods.
 	 *
 	 * @since 1.0.0

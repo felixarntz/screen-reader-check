@@ -83,6 +83,15 @@ class App {
 	public $tests;
 
 	/**
+	 * The stats class instance.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @var ScreenReaderCheck\Stats
+	 */
+	public $stats;
+
+	/**
 	 * The AJAX handler class instance.
 	 *
 	 * @since 1.0.0
@@ -159,6 +168,8 @@ class App {
 		add_action( 'manage_src_check_posts_custom_column', array( $this->checks, 'render_post_type_site_category_column' ), 10, 2 );
 
 		$this->tests = new Tests( $this->checks );
+
+		$this->stats = new Stats( $this->checks, $this->tests );
 
 		$ajax = new AjaxHandler();
 		add_action( 'admin_init', array( $ajax, 'init' ) );

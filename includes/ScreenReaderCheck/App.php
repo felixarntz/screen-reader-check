@@ -155,6 +155,8 @@ class App {
 
 		$this->checks = new Checks( $this->domains );
 		add_action( 'init', array( $this->checks, 'register_post_type' ) );
+		add_filter( 'manage_src_check_posts_columns', array( $this->checks, 'register_post_type_columns' ) );
+		add_action( 'manage_src_check_posts_custom_column', array( $this->checks, 'render_post_type_site_category_column' ), 10, 2 );
 
 		$this->tests = new Tests( $this->checks );
 

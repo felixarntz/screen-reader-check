@@ -224,7 +224,7 @@ class Tests {
 	 * @return array Array of global options.
 	 */
 	public function get_global_options() {
-		return array(
+		$global_options = array(
 			array(
 				'slug'              => 'iconfont',
 				'type'              => 'text',
@@ -245,6 +245,47 @@ class Tests {
 				),
 				'default'           => '',
 			),
+			array(
+				'slug'              => 'site_category',
+				'type'              => 'select',
+				'label'             => __( 'Website Category', 'screen-reader-check' ),
+				'description'       => __( 'For analytical purposes it can be helpful to provide the category of the website.', 'screen-reader-check' ),
+				'admin_description' => __( 'This is the category of the website.', 'screen-reader-check' ),
+				'options'           => $this->get_site_categories(),
+				'default'           => '',
+			),
+		);
+
+		return $global_options;
+	}
+
+	/**
+	 * Returns the available website categories.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return array Array of category slug => category name pairs.
+	 */
+	public function get_site_categories() {
+		return array(
+			'adult'      => __( 'Adult', 'screen-reader-check' ),
+			'arts'       => __( 'Arts', 'screen-reader-check' ),
+			'business'   => __( 'Business', 'screen-reader-check' ),
+			'computers'  => __( 'Computers', 'screen-reader-check' ),
+			'games'      => __( 'Games', 'screen-reader-check' ),
+			'health'     => __( 'Health', 'screen-reader-check' ),
+			'home'       => __( 'Home', 'screen-reader-check' ),
+			'kids_teens' => __( 'Kids and Teens', 'screen-reader-check' ),
+			'news'       => __( 'News', 'screen-reader-check' ),
+			'recreation' => __( 'Recreation', 'screen-reader-check' ),
+			'reference'  => __( 'Reference', 'screen-reader-check' ),
+			'regional'   => __( 'Regional', 'screen-reader-check' ),
+			'science'    => __( 'Science', 'screen-reader-check' ),
+			'shopping'   => __( 'Shopping', 'screen-reader-check' ),
+			'society'    => __( 'Society', 'screen-reader-check' ),
+			'sports'     => __( 'Sports', 'screen-reader-check' ),
+			'world'      => __( 'World', 'screen-reader-check' ),
 		);
 	}
 

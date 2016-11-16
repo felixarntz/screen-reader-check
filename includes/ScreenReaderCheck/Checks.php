@@ -211,6 +211,8 @@ class Checks {
 	public function __call( $method, $args ) {
 		switch ( $method ) {
 			case 'register_post_type':
+			case 'register_post_type_columns':
+			case 'render_post_type_site_category_column':
 			case 'register_post_type_meta_boxes':
 			case 'render_post_type_data_meta_box':
 			case 'render_post_type_tests_meta_box':
@@ -260,6 +262,56 @@ class Checks {
 			'has_archive'          => false,
 			'rewrite'              => false,
 		) );
+	}
+
+	/**
+	 * Registers additional columns for the post type list table.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param array $columns Array of registered columns.
+	 * @return array Array with new columns.
+	 */
+	private function register_post_type_columns( $columns ) {
+		$date = $columns['date'];
+		unset( $columns['date'] );
+
+		$columns['site_category'] = __( 'Website Category', 'screen-reader-check' );
+		$columns['date'] = $date;
+
+		return $columns;
+	}
+
+	/**
+	 * Renders the site category column for the post type list table.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param string $column_name The name of the column to render.
+	 * @param int    $post_id     Post ID.
+	 */
+	private function render_post_type_site_category_column( $column_name, $post_id ) {
+		if ( 'site_category' !== $column_name ) {
+			return;
+		}
+
+		$check = $this->get( $post_id );
+		$site_category = $check->get_option( 'global_site_category' );
+
+		$available_categories = $this->global_options[2]['options'];
+		if ( isset( $available_categories[ $site_category ] ) ) {
+			$site_category = $available_categories[ $site_category ];
+		} else {
+			$site_category = '';
+		}
+
+		if ( ! $site_category ) {
+			echo '<span aria-hidden="true">&#8212;</span><span class="screen-reader-text">' . __( 'No website category', 'screen-reader-text' ) . '</span>';
+		} else {
+			echo $site_category;
+		}
 	}
 
 	/**

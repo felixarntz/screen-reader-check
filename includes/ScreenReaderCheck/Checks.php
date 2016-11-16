@@ -304,14 +304,10 @@ class Checks {
 		if ( isset( $available_categories[ $site_category ] ) ) {
 			$site_category = $available_categories[ $site_category ];
 		} else {
-			$site_category = '';
+			$site_category = '<span aria-hidden="true">&#8212;</span><span class="screen-reader-text">' . __( 'No website category', 'screen-reader-text' ) . '</span>';
 		}
 
-		if ( ! $site_category ) {
-			echo '<span aria-hidden="true">&#8212;</span><span class="screen-reader-text">' . __( 'No website category', 'screen-reader-text' ) . '</span>';
-		} else {
-			echo $site_category;
-		}
+		echo $site_category;
 	}
 
 	/**

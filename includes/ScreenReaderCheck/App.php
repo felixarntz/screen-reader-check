@@ -170,6 +170,7 @@ class App {
 		$this->tests = new Tests( $this->checks );
 
 		$this->stats = new Stats( $this->checks, $this->tests );
+		add_action( 'admin_menu', array( $this->stats, 'register_menu_item' ) );
 
 		$ajax = new AjaxHandler();
 		add_action( 'admin_init', array( $ajax, 'init' ) );

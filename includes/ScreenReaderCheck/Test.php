@@ -152,7 +152,7 @@ abstract class Test {
 
 		$this->check = null;
 
-		if ( $stats && is_a( $stats, 'ScreenReaderCheck\Stats' ) ) {
+		if ( $this->stats && is_a( $this->stats, 'ScreenReaderCheck\Stats' ) ) {
 			$this->stats->log_result( $result );
 		}
 

@@ -216,6 +216,18 @@ class Tests {
 	}
 
 	/**
+	 * Returns all available tests.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return array Array of test objects.
+	 */
+	public function get_tests() {
+		return array_combine( array_keys( $this->test_order ), $this->tests );
+	}
+
+	/**
 	 * Returns an array of global options that can optionally be entered on form submission.
 	 *
 	 * @since 1.0.0

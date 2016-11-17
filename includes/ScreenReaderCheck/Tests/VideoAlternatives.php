@@ -32,6 +32,7 @@ class VideoAlternatives extends Test {
 		$this->description      = __( 'Silent video files that convey information must have proper media alternatives. For visual video content an audio description is required.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.2.1 Audio-only and Video-only (Prerecorded)', 'screen-reader-check' );
 		$this->guideline_anchor = 'media-equiv-av-only-alt';
+		$this->may_request_data = true;
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20/#media-equiv-audio-desc',

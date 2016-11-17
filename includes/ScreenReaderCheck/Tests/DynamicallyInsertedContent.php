@@ -32,6 +32,7 @@ class DynamicallyInsertedContent extends Test {
 		$this->description      = __( 'Content that is dynamically added (for example through AJAX) should appear at a relevant position in the page.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.3.2 Meaningful Sequence', 'screen-reader-check' );
 		$this->guideline_anchor = 'content-structure-separation-sequence';
+		$this->may_request_data = true;
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/SCR21',

@@ -32,6 +32,7 @@ class CaptchaAlternatives extends Test {
 		$this->description      = __( 'Every image-based CAPTCHAs should have a non-image-based alternative provided.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.1.1 Non-text Content', 'screen-reader-check' );
 		$this->guideline_anchor = 'text-equiv-all';
+		$this->may_request_data = true;
 
 		$this->links[] = array();
 	}

@@ -32,6 +32,7 @@ class StructuralLists extends Test {
 		$this->description      = __( 'Valid list markup, such as <code>ul</code>, <code>ol</code> and <code>dl</code>, should be used for lists on the page.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.3.1 Info and Relationships', 'screen-reader-check' );
 		$this->guideline_anchor = 'content-structure-separation-programmatic';
+		$this->may_request_data = true;
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/H48',

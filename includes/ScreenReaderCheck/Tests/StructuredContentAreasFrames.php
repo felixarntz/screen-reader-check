@@ -32,6 +32,7 @@ class StructuredContentAreasFrames extends Test {
 		$this->description      = __( 'Frames must have descriptive title attributes.', 'screen-reader-check' );
 		$this->guideline_title  = __( '2.4.1 Bypass Blocks', 'screen-reader-check' );
 		$this->guideline_anchor = 'navigation-mechanisms-skip';
+		$this->may_request_data = true;
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/H64',

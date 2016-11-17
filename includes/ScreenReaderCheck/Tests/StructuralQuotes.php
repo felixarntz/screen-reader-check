@@ -32,6 +32,7 @@ class StructuralQuotes extends Test {
 		$this->description      = __( 'Quotes that are their own paragraph should be marked with the structural HTML element <code>blockquote</code>.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.3.1 Info and Relationships', 'screen-reader-check' );
 		$this->guideline_anchor = 'content-structure-separation-programmatic';
+		$this->may_request_data = true;
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/H49',

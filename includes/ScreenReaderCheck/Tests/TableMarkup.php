@@ -32,6 +32,7 @@ class TableMarkup extends Test {
 		$this->description      = __( 'Data tables must have a valid structure with marked headings and relationships between the cells. If layout tables are present, structural table markup must not be used for these.', 'screen-reader-check' );
 		$this->guideline_title  = __( '1.3.1 Info and Relationships', 'screen-reader-check' );
 		$this->guideline_anchor = 'content-structure-separation-programmatic';
+		$this->may_request_data = true;
 
 		$this->links[] = array(
 			'target' => 'https://www.w3.org/TR/WCAG20-TECHS/H39',

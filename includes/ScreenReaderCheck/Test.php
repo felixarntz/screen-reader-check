@@ -71,6 +71,15 @@ abstract class Test {
 	protected $links = array();
 
 	/**
+	 * Whether this test may request additional user input.
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 * @var bool
+	 */
+	protected $may_request_data = false;
+
+	/**
 	 * The stats class instance.
 	 *
 	 * @since 1.0.0
@@ -229,6 +238,21 @@ abstract class Test {
 	 */
 	public function get_guideline_anchor() {
 		return $this->guideline_anchor;
+	}
+
+	/**
+	 * Checks whether this test may request data.
+	 *
+	 * Some tests never ask for any additional user input.
+	 * This method allows to differentiate between the two types.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 *
+	 * @return bool True if the test may request data, false otherwise.
+	 */
+	public function may_request_data() {
+		return $this->may_request_data;
 	}
 
 	/**

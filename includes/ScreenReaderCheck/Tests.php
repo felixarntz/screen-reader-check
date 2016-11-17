@@ -297,7 +297,6 @@ class Tests {
 			'shopping'   => __( 'Shopping', 'screen-reader-check' ),
 			'society'    => __( 'Society', 'screen-reader-check' ),
 			'sports'     => __( 'Sports', 'screen-reader-check' ),
-			'world'      => __( 'World', 'screen-reader-check' ),
 		);
 	}
 

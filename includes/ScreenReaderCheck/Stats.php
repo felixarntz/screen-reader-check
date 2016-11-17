@@ -107,11 +107,12 @@ class Stats {
 	}
 
 	public function render_page() {
-		$date_start    = ! empty( $_REQUEST['date_start'] ) ? wp_unslash( $_REQUEST['date_start'] ) : '';
-		$date_end      = ! empty( $_REQUEST['date_end'] ) ? wp_unslash( $_REQUEST['date_end'] ) : '';
-		$site_category = ! empty( $_REQUEST['site_category'] ) ? wp_unslash( $_REQUEST['site_category'] ) : '';
-		$max_items     = ! empty( $_REQUEST['max_items'] ) ? absint( $_REQUEST['max_items'] ) : 20;
-		$table_format  = ! empty( $_REQUEST['table_format'] ) ? wp_unslash( $_REQUEST['table_format'] ) : 'complex';
+		$date_start     = ! empty( $_REQUEST['date_start'] ) ? wp_unslash( $_REQUEST['date_start'] ) : '';
+		$date_end       = ! empty( $_REQUEST['date_end'] ) ? wp_unslash( $_REQUEST['date_end'] ) : '';
+		$site_category  = ! empty( $_REQUEST['site_category'] ) ? wp_unslash( $_REQUEST['site_category'] ) : '';
+		$max_items      = ! empty( $_REQUEST['max_items'] ) ? absint( $_REQUEST['max_items'] ) : 20;
+		$included_tests = ! empty( $_REQUEST['included_tests'] ) ? wp_unslash( $_REQUEST['included_tests'] ) : 'all';
+		$table_format   = ! empty( $_REQUEST['table_format'] ) ? wp_unslash( $_REQUEST['table_format'] ) : 'complex';
 
 		if ( 'compact' === $table_format ) {
 			$errors_text = __( 'Err.', 'screen-reader-check' );
@@ -244,6 +245,14 @@ class Stats {
 						<input type="number" id="max-items" name="max_items" value="<?php echo esc_attr( $max_items ); ?>" min="0" step="1" required="required" />
 					</div>
 					<div class="alignleft">
+						<label for="included-tests"><?php _e( 'Included Tests', 'screen-reader-check' ); ?></label>
+						<select id="included-tests" name="included_tests">
+							<option value="all" <?php selected( $included_tests, 'all' ); ?>><?php _e( 'All', 'screen-reader-check' ); ?></option>
+							<option value="with_request_data" <?php selected( $included_tests, 'with_request_data' ); ?>><?php _e( 'With Request Data', 'screen-reader-check' ); ?></option>
+							<option value="without_request_data" <?php selected( $included_tests, 'without_request_data' ); ?>><?php _e( 'Without Request Data', 'screen-reader-check' ); ?></option>
+						</select>
+					</div>
+					<div class="alignleft">
 						<label for="table-format"><?php _e( 'Table Format', 'screen-reader-check' ); ?></label>
 						<select id="table-format" name="table_format">
 							<option value="complex" <?php selected( $table_format, 'complex' ); ?>><?php _e( 'Complex', 'screen-reader-check' ); ?></option>
@@ -269,6 +278,10 @@ class Stats {
 							foreach ( $tests as $test_slug => $test ) :
 								$i++;
 
+								if ( ! $this->should_include_test( $test, $included_tests ) ) {
+									continue;
+								}
+
 								$total_stats['tests'][ $test_slug ] = array(
 									'error_count'   => 0,
 									'warning_count' => 0,
@@ -287,7 +300,11 @@ class Stats {
 						<tr>
 							<th id="results_total_errors" class="column-results_total_errors" headers="results_total"><?php echo $errors_text; ?></th>
 							<th id="results_total_warnings" class="column-results_total_warnings" headers="results_total"><?php echo $warnings_text; ?></th>
-							<?php foreach ( $tests as $test_slug => $test ) : ?>
+							<?php foreach ( $tests as $test_slug => $test ) :
+								if ( ! $this->should_include_test( $test, $included_tests ) ) {
+									continue;
+								}
+								?>
 								<th id="results_<?php echo $test_slug; ?>_errors" class="column-results_<?php echo $test_slug; ?>_errors" headers="results_<?php echo $test_slug; ?>"><?php echo $errors_text; ?></th>
 								<th id="results_<?php echo $test_slug; ?>_warnings" class="column-results_<?php echo $test_slug; ?>_warnings" headers="results_<?php echo $test_slug; ?>"><?php echo $warnings_text; ?></th>
 								<th id="results_<?php echo $test_slug; ?>_additional" class="column-results_<?php echo $test_slug; ?>_additional" headers="results_<?php echo $test_slug; ?>"><?php echo $additional_text; ?></th>
@@ -317,6 +334,10 @@ class Stats {
 								<td class="column-results_total_errors"><?php echo number_format_i18n( $stats['total']['error_count'] ); ?></td>
 								<td class="column-results_total_warnings"><?php echo number_format_i18n( $stats['total']['warning_count'] ); ?></td>
 								<?php foreach ( $tests as $test_slug => $test ) :
+									if ( ! $this->should_include_test( $test, $included_tests ) ) {
+										continue;
+									}
+
 									$errors   = ! empty( $stats['tests'][ $test_slug ]['error_count'] ) ? $stats['tests'][ $test_slug ]['error_count'] : 0;
 									$warnings = ! empty( $stats['tests'][ $test_slug ]['warning_count'] ) ? $stats['tests'][ $test_slug ]['warning_count'] : 0;
 									$additional = '';
@@ -347,6 +368,10 @@ class Stats {
 								<td class="column-results_total_errors"><?php echo number_format_i18n( $total_stats['total']['error_count'] ); ?></td>
 								<td class="column-results_total_warnings"><?php echo number_format_i18n( $total_stats['total']['warning_count'] ); ?></td>
 								<?php foreach ( $tests as $test_slug => $test ) :
+									if ( ! $this->should_include_test( $test, $included_tests ) ) {
+										continue;
+									}
+
 									$additional = '';
 									if ( $total_stats['tests'][ $test_slug ]['skipped'] ) {
 										$additional .= 'S';
@@ -366,5 +391,28 @@ class Stats {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Checks whether a given test should be included in the table.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 *
+	 * @param ScreenReaderCheck\Test $test           The test to check.
+	 * @param string                 $included_tests The current setting for included tests.
+	 * @return bool True if the test should be included, false otherwise.
+	 */
+	private function should_include_test( $test, $included_tests = 'all' ) {
+		switch ( $included_tests ) {
+			case 'all':
+				return true;
+			case 'with_request_data':
+				return $test->may_request_data();
+			case 'without_request_data':
+				return ! $test->may_request_data();
+		}
+
+		return true;
 	}
 }
